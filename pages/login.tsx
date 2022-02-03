@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import Layout from "@/components/Layout";
 import { EyeBulkIcon, EyeSlashBulkIcon } from "@/styles/iconsax";
 import {
   Button,
