@@ -11,24 +11,26 @@ const Layout: FC<{ title?: string; header?: string }> = ({
 }) => {
   return (
     <>
-      <Head>{title ? <title>{title}</title> : <title>SP-Kulit</title>}</Head>
+      <Head>{title ? <title>{title}</title> : <title>SP Kulit</title>}</Head>
 
       <Flex bgColor={"gray.100"} minH={"100vh"}>
         <Sidebar />
 
-        <Flex flexDirection={"column"} w="full" mr={4}>
+        <Flex flexDirection={"column"} w="full" mr={6}>
           <Flex
             h={"58px"}
             w={"full"}
             my={4}
-            px={8}
+            px={4}
+            mx={2}
             top={4}
             rounded={"lg"}
             bgColor={"white"}
             boxShadow={"sm"}
-            align={"center"}
+            alignItems={"center"}
             justifyContent={"space-between"}
             position={"sticky"}
+            zIndex="overlay"
           >
             <Text
               fontFamily={"Inter"}
@@ -40,7 +42,7 @@ const Layout: FC<{ title?: string; header?: string }> = ({
             </Text>
             <AvatarSign />
           </Flex>
-          <Flex px={2} my={2}>
+          <Flex mx={2} my={2} w="full">
             {children}
           </Flex>
         </Flex>

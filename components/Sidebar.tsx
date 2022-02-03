@@ -76,7 +76,6 @@ const Sidebar: FC<{}> = () => {
           href="/"
           icon={<ElementBulkIcon {...navItemProps} />}
           iconActive={<ElementBulkIcon {...navItemPropsActive} />}
-          active={true}
         />
         <NavItem
           label="Halaman Materi"

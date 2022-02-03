@@ -78,25 +78,26 @@ const Login: NextPage = () => {
   return (
     <Center minH={"100vh"} bgColor={"gray.100"}>
       <Stack
-        minW={"340px"}
-        spacing="24px"
         as="form"
-        alignItems="center"
-        onSubmit={handleSubmit(onSubmit)}
+        w="full"
+        minW={"340px"}
+        maxW={"450px"}
+        mx={6}
+        py={6}
+        px={8}
+        spacing="24px"
+        align="center"
         bgColor={"white"}
         rounded={"lg"}
-        p={6}
         boxShadow={"lg"}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <FormControl id="email">
           <FormLabel fontFamily={"inter"}>Email</FormLabel>
           <InputGroup>
-            {/* <InputLeftElement
-                pointerEvents="none"
-                children={<EmailBoldIcon boxSize={6} color="gray.600" />}
-              /> */}
             <Input
               type="email"
+              placeholder="Email"
               isInvalid={errors.email && true}
               {...register("email", { required: "Email harus diisi" })}
             />
@@ -123,6 +124,7 @@ const Login: NextPage = () => {
               /> */}
             <Input
               type={showPassword ? "text" : "password"}
+              placeholder="Kata Sandi"
               isInvalid={errors.password && true}
               {...register("password", {
                 required: "Kata sandi harus diisi",
