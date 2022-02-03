@@ -8,21 +8,21 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
+import { signOut, useSession } from "next-auth/react";
 import { FC } from "react";
+import LogoutDialog from "./Modal/LogoutDialog";
 
 const AvatarSign: FC<{}> = () => {
+  const { data: session } = useSession();
+
   return (
     <Menu>
       <MenuButton>
         <Flex align={"center"}>
           <Text fontWeight={"medium"} color={"gray.600"} mr={2}>
-            Syahrun Cega
+            {session?.user?.name}
           </Text>
-          <Avatar
-            name="Syahrun Cega"
-            size={"sm"}
-            src="https://bit.ly/broken-link"
-          />
+          <Avatar name="Syahrun Cega" size={"sm"} src="#" />
         </Flex>
       </MenuButton>
       <MenuList>
@@ -31,9 +31,7 @@ const AvatarSign: FC<{}> = () => {
         >
           Profile
         </MenuItem>
-        <MenuItem icon={<LogoutBulkIcon fontSize={20} color={"red.500"} />}>
-          Logout
-        </MenuItem>
+        <LogoutDialog />
       </MenuList>
     </Menu>
   );
