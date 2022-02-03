@@ -15,12 +15,7 @@ const AvatarSign: FC<{}> = () => {
     <Menu>
       <MenuButton>
         <Flex align={"center"}>
-          <Text
-            fontFamily={"Barlow"}
-            fontWeight={"medium"}
-            color={"gray.600"}
-            mr={2}
-          >
+          <Text fontWeight={"medium"} color={"gray.600"} mr={2}>
             Syahrun Cega
           </Text>
           <Avatar
