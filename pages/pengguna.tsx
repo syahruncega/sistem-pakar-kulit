@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import FormPenggunaModal from "@/components/Form/FormPenggunaModal";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
@@ -7,6 +8,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Column } from "react-table";
 import useSWR from "swr";
+import FormResetSandiModal from "@/components/Form/FormResetSandiModal";
 
 const columns: Column[] = [
   {
@@ -14,7 +16,7 @@ const columns: Column[] = [
     accessor: "email",
   },
   {
-    Header: "Nama Lengkap",
+    Header: "Nama Pengguna",
     accessor: "name",
   },
   {
@@ -29,24 +31,8 @@ const columns: Column[] = [
       const router = useRouter();
       return (
         <Stack direction="row">
-          <Button
-            colorScheme="green"
-            size="xs"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Edit
-          </Button>
-          <Button
-            colorScheme="orange"
-            size="xs"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            Reset Sandi
-          </Button>
+          <FormPenggunaModal isEdit user={value} />
+          <FormResetSandiModal user={value} />
           <DeleteDialog
             title={"Hapus pengguna?"}
             apiRoute={`/api/user/${value.id}`}
@@ -70,6 +56,7 @@ const Pengguna: NextPage<{}> = () => {
         data={data}
         tableNumber={true}
         search={true}
+        rightButton={<FormPenggunaModal />}
       />
     </Layout>
   );

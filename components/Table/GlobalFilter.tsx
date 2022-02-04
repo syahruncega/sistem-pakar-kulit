@@ -13,7 +13,7 @@ const GlobalFilter: FC<{ filter: any; setFilter: any }> = ({
     setFilter(value || undefined);
   }, 500);
   return (
-    <InputGroup mx={4} my={3}>
+    <InputGroup>
       <InputLeftElement
         pointerEvents="none"
         children={

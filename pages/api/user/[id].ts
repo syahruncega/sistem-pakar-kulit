@@ -2,13 +2,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
 import { prisma } from "@/libs/prisma";
-import hasher from "@/utils/hasher";
+import hasher from "utils/hasher";
 
 type UserInput = {
   email: string;
   name: string;
   password: string;
   role: any;
+  hash: string;
 };
 
 export default async function handler(
@@ -16,34 +17,39 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getSession({ req });
-
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
   }
+  const { id } = req.query;
 
-  if (req.method === "GET") {
+  if (req.method === "DELETE") {
     try {
-      const user = await prisma.user.findMany({
-        orderBy: { updatedAt: "desc" },
+      const deleteUser = await prisma.user.delete({
+        where: {
+          id: id as string,
+        },
       });
-      res.status(200).json(user);
+      res.status(200).send(deleteUser);
     } catch (error) {
       console.error(error);
-      res.status(500).json(error);
+      res.status(500).send(error);
     }
-  } else if (req.method === "POST") {
+  } else if (req.method === "PUT") {
     try {
       const body: UserInput = req.body;
-      const createUser = await prisma.user.create({
+      const updateUser = await prisma.user.update({
+        where: {
+          id: id as string,
+        },
         data: {
           email: body.email,
           name: body.name,
-          hash: hasher(body.password),
+          hash: body.password ? hasher(body.password) : body.hash,
           verified: true,
           role: body.role,
         },
       });
-      res.status(201).json(createUser);
+      res.status(200).send(updateUser);
     } catch (error: any) {
       console.error(error);
       if (error.code === "P2002") {

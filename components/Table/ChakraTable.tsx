@@ -44,6 +44,7 @@ export type DataTableProps<Data extends object> = {
   search?: boolean;
   onClick?: string;
   hiddenColumns?: string[] | any;
+  rightButton?: JSX.Element;
 };
 
 function ChakraTable<Data extends object>({
@@ -54,6 +55,7 @@ function ChakraTable<Data extends object>({
   search = false,
   onClick,
   hiddenColumns = [],
+  rightButton,
 }: DataTableProps<Data>) {
   const {
     rows,
@@ -98,9 +100,17 @@ function ChakraTable<Data extends object>({
       bgColor={"white"}
       py={2}
     >
-      {search && (
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-      )}
+      <Flex
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        mx={4}
+        my={2}
+      >
+        {search && (
+          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        )}
+        {rightButton}
+      </Flex>
 
       <Box overflow={"auto"}>
         <Table {...getTableProps()} size="md" bgColor="white">
