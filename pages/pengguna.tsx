@@ -3,12 +3,19 @@ import FormPenggunaModal from "@/components/Form/FormPenggunaModal";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
-import { Button, Flex, Heading, Stack } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Flex,
+  Stack,
+} from "@chakra-ui/react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import { Column } from "react-table";
 import useSWR from "swr";
 import FormResetSandiModal from "@/components/Form/FormResetSandiModal";
+import { useSession } from "next-auth/react";
 
 const columns: Column[] = [
   {
@@ -28,7 +35,6 @@ const columns: Column[] = [
     Header: "Aksi",
     accessor: (originalRow) => originalRow,
     Cell: ({ cell: { value } }) => {
-      const router = useRouter();
       return (
         <Stack direction="row">
           <FormPenggunaModal isEdit user={value} />
@@ -46,18 +52,41 @@ const columns: Column[] = [
 
 const Pengguna: NextPage<{}> = () => {
   const { data } = useSWR("/api/user", fetcher);
-  if (!data) {
+  const { data: session }: any = useSession();
+  if (!data || !session) {
     return null;
   }
   return (
     <Layout title="Pengguna - SP Kulit" header="Pengguna">
-      <ChakraTable
-        columns={columns}
-        data={data}
-        tableNumber={true}
-        search={true}
-        rightButton={<FormPenggunaModal />}
-      />
+      {session.user?.role === "Admin" ? (
+        <ChakraTable
+          columns={columns}
+          data={data}
+          tableNumber={true}
+          search={true}
+          rightButton={<FormPenggunaModal />}
+        />
+      ) : (
+        <Flex justifyContent={"center"} width={"full"} mt={4}>
+          <Alert
+            status="warning"
+            maxWidth={"400px"}
+            flexDirection={"column"}
+            rounded={"md"}
+            justifyContent={"center"}
+            boxShadow={"xl"}
+          >
+            <Flex mb={2}>
+              <AlertIcon />
+              <AlertTitle mr={2}>Akses ditolak</AlertTitle>
+            </Flex>
+            <AlertDescription textAlign={"center"}>
+              Anda tidak memiliki hak untuk mengakses halaman ini. Silahkan
+              hubungi admin.
+            </AlertDescription>
+          </Alert>
+        </Flex>
+      )}
     </Layout>
   );
 };
