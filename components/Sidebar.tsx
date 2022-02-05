@@ -10,6 +10,7 @@ import {
   UserEditBulkIcon,
 } from "@/styles/iconsax";
 import { Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { FC } from "react";
 import NavItem from "./NavItem";
 
@@ -26,6 +27,10 @@ const Sidebar: FC<{}> = () => {
     className: "navItemIconActive",
     transition: "0.2s",
   };
+  const { data: session }: any = useSession();
+  if (!session) {
+    return null;
+  }
   return (
     <Flex
       position={"sticky"}
@@ -55,18 +60,21 @@ const Sidebar: FC<{}> = () => {
         </Heading>
       </Flex>
       <Divider />
-      <Flex my={4} flexDirection={"column"}>
-        <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
-          ADMIN
-        </Text>
-        <NavItem
-          label="Pengguna"
-          href="/pengguna"
-          icon={<UserEditBulkIcon {...navItemProps} />}
-          iconActive={<UserEditBulkIcon {...navItemPropsActive} />}
-        />
-      </Flex>
-      <Divider />
+      {session?.user?.role === "Admin" && (
+        <Flex mt={4} flexDirection={"column"}>
+          <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
+            ADMIN
+          </Text>
+          <NavItem
+            label="Pengguna"
+            href="/pengguna"
+            icon={<UserEditBulkIcon {...navItemProps} />}
+            iconActive={<UserEditBulkIcon {...navItemPropsActive} />}
+          />
+          <Divider mt={4} />
+        </Flex>
+      )}
+
       <Flex my={4} flexDirection={"column"}>
         <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
           USER

@@ -14,10 +14,7 @@ import { FC, MutableRefObject, useRef, useState } from "react";
 import { signOut } from "next-auth/react";
 import { LogoutBulkIcon } from "@/styles/iconsax";
 
-const LogoutDialog: FC<{ withIcon?: boolean; display?: any }> = ({
-  withIcon = true,
-  display,
-}) => {
+const LogoutDialog: FC<{ isButton?: boolean }> = ({ isButton = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const onClose = () => setIsOpen(false);
@@ -25,7 +22,16 @@ const LogoutDialog: FC<{ withIcon?: boolean; display?: any }> = ({
 
   return (
     <>
-      {withIcon ? (
+      {isButton ? (
+        <Button
+          colorScheme={"red"}
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          Logout
+        </Button>
+      ) : (
         <MenuItem
           icon={<LogoutBulkIcon fontSize={20} color={"red.500"} />}
           onClick={() => {
@@ -34,17 +40,6 @@ const LogoutDialog: FC<{ withIcon?: boolean; display?: any }> = ({
         >
           Logout
         </MenuItem>
-      ) : (
-        <Flex alignItems={"center"} display={display}>
-          <LogoutBulkIcon fontSize={20} mr={2} />
-          <Text
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          >
-            Logout
-          </Text>
-        </Flex>
       )}
 
       <AlertDialog
