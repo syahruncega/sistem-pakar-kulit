@@ -94,21 +94,24 @@ function ChakraTable<Data extends object>({
   return (
     <Flex
       flexDirection={"column"}
-      width={"full"}
       boxShadow="lg"
       rounded="lg"
       bgColor={"white"}
       py={2}
+      overflow="auto"
+      width={"full"}
     >
       <Flex
-        justifyContent={"space-between"}
-        alignItems={"center"}
+        flexDirection={["column-reverse", "row"]}
+        justifyContent={["space-between"]}
+        alignItems={["flex-end", "center"]}
         mx={4}
         my={2}
       >
         {search && (
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         )}
+        <Box h={4} w={8} />
         {rightButton}
       </Flex>
 

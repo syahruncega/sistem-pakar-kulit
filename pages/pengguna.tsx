@@ -59,13 +59,15 @@ const Pengguna: NextPage<{}> = () => {
   return (
     <Layout title="Pengguna - SP Kulit" header="Pengguna">
       {session.user?.role === "Admin" ? (
-        <ChakraTable
-          columns={columns}
-          data={data}
-          tableNumber={true}
-          search={true}
-          rightButton={<FormPenggunaModal />}
-        />
+        <Flex w="full">
+          <ChakraTable
+            columns={columns}
+            data={data}
+            tableNumber={true}
+            search={true}
+            rightButton={<FormPenggunaModal />}
+          />
+        </Flex>
       ) : (
         <Flex justifyContent={"center"} width={"full"} mt={4}>
           <Alert

@@ -34,14 +34,14 @@ const Sidebar: FC<{}> = () => {
   return (
     <Flex
       position={"sticky"}
-      mx={4}
       my={4}
       px={4}
+      mr={6}
       top={4}
       rounded={"lg"}
       boxShadow={"md"}
       bgColor={"white"}
-      width={"280px"}
+      minW={"230px"}
       display={["none", "none", "flex"]}
       flexDirection={"column"}
       //Bellow Option

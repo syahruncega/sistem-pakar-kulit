@@ -13,21 +13,19 @@ const Layout: FC<{ title?: string; header?: string }> = ({
     <>
       <Head>{title ? <title>{title}</title> : <title>SP Kulit</title>}</Head>
 
-      <Flex bgColor={"gray.100"} minH={"100vh"}>
+      <Flex bgColor={"gray.100"} minH={"100vh"} px={6}>
         <Sidebar />
 
-        <Flex flexDirection={"column"} w="full" mr={6}>
+        <Flex flexDirection={"column"} w="full" overflow={"auto"}>
           <Flex
             h={"58px"}
-            w={"full"}
             my={4}
             px={4}
-            mx={2}
             top={4}
+            align={"center"}
             rounded={"lg"}
             bgColor={"white"}
             boxShadow={"sm"}
-            alignItems={"center"}
             justifyContent={"space-between"}
             position={"sticky"}
             zIndex="overlay"
@@ -42,9 +40,7 @@ const Layout: FC<{ title?: string; header?: string }> = ({
             </Text>
             <AvatarSign />
           </Flex>
-          <Flex mx={2} my={2} w="full">
-            {children}
-          </Flex>
+          <Flex my={2}>{children}</Flex>
         </Flex>
       </Flex>
     </>
