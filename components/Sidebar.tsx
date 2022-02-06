@@ -112,12 +112,12 @@ const Sidebar: FC<{}> = () => {
           icon={<BubbleBulkIcon {...navItemProps} />}
           iconActive={<BubbleBulkIcon {...navItemPropsActive} />}
         />
-        <NavItem
+        {/* <NavItem
           label="Solusi"
           href="/solusi"
           icon={<ClipboardTickBulkIcon {...navItemProps} />}
           iconActive={<ClipboardTickBulkIcon {...navItemPropsActive} />}
-        />
+        /> */}
       </Flex>
       <Divider />
       <Flex my={4} flexDirection={"column"}>

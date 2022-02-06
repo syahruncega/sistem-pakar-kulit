@@ -40,3 +40,13 @@ model BahanPemutih {
   kodeBahanPemutih  String   @unique
   jenisBahanPemutih String   @unique
 }
+
+model Pasien {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  namaPasien   String
+  nik          String   @unique
+  jenisKelamin String
+  usia         Int
+}
