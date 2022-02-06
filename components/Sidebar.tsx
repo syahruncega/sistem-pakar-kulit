@@ -107,8 +107,8 @@ const Sidebar: FC<{}> = () => {
           iconActive={<ClipboardTextBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
-          label="Penyakit"
-          href="/penyakit"
+          label="Bahan Pemutih"
+          href="/bahan-pemutih"
           icon={<BubbleBulkIcon {...navItemProps} />}
           iconActive={<BubbleBulkIcon {...navItemPropsActive} />}
         />

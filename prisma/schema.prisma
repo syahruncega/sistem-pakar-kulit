@@ -23,3 +23,20 @@ model User {
   verificationToken   String?
   forgotPasswordToken String?
 }
+
+model Gejala {
+  id             String   @id @default(uuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  kodeGejala     String   @unique
+  namaGejala     String
+  nilaiKepastian Float
+}
+
+model BahanPemutih {
+  id                String   @id @default(uuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  kodeBahanPemutih  String   @unique
+  jenisBahanPemutih String   @unique
+}

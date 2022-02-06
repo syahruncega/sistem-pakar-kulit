@@ -40,7 +40,9 @@ const Layout: FC<{ title?: string; header?: string }> = ({
             </Text>
             <AvatarSign />
           </Flex>
-          <Flex my={2}>{children}</Flex>
+          <Flex mt={2} mb={4}>
+            {children}
+          </Flex>
         </Flex>
       </Flex>
     </>
