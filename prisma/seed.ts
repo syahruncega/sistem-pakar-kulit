@@ -11,6 +11,7 @@ async function main() {
   await prisma.user.deleteMany();
   await prisma.bahanPemutih.deleteMany();
   await prisma.gejala.deleteMany();
+  await prisma.basisPengetahuan.deleteMany();
 
   await prisma.user.createMany({
     data: users,
@@ -22,6 +23,10 @@ async function main() {
   });
   await prisma.gejala.createMany({
     data: gejala,
+    skipDuplicates: true,
+  });
+  await prisma.basisPengetahuan.createMany({
+    data: basisPengetahuan,
     skipDuplicates: true,
   });
 }
@@ -49,6 +54,63 @@ const users = [
     hash: hasher("user"),
     role: "User",
     verified: true,
+  },
+];
+
+const basisPengetahuan = [
+  {
+    rule: "R1",
+    kaidah: "IF G001 AND G002 AND G005 AND G006 THEN P001",
+  },
+  {
+    rule: "R2",
+    kaidah: "IF G001 AND G005 AND G006 AND G007 AND G008 THEN P002",
+  },
+  {
+    rule: "R3",
+    kaidah:
+      "IF G001 AND G009 AND G010 AND G011 AND G012 AND G013 AND G014 THEN P003",
+  },
+  {
+    rule: "R4",
+    kaidah: "IF G001 AND G015 AND G016 AND G017 THEN P004",
+  },
+  {
+    rule: "R5",
+    kaidah: "IF G001 AND G005 AND G015 AND G018 THEN P005",
+  },
+  {
+    rule: "R6",
+    kaidah: "IF G001 AND G002 AND G019 AND G020",
+  },
+  {
+    rule: "R7",
+    kaidah: "IF G001 AND G002 AND G018 AND G021 AND G022 AND G023 THEN P007",
+  },
+  {
+    rule: "R8",
+    kaidah: "IF G024 AND G025 AND G026 AND G027 AND G039 THEN P008",
+  },
+  {
+    rule: "R9",
+    kaidah: "IF G018 AND G021 AND G028 AND G029 AND G030 THEN P009",
+  },
+  {
+    rule: "R10",
+    kaidah:
+      "IF G018 AND G031 AND G032 AND G033 AND G034 AND G035 AND G036 AND G048 THEN P010",
+  },
+  {
+    rule: "R11",
+    kaidah: "IF G037 AND G038 AND G039 THEN P011",
+  },
+  {
+    rule: "R12",
+    kaidah: "IF G003 AND G005 AND G018 AND G040 AND G041 AND G042 THEN P012",
+  },
+  {
+    rule: "R13",
+    kaidah: "IF G043 AND G044 AND G045 AND G046 AND G047 AND G049 THEN P013",
   },
 ];
 

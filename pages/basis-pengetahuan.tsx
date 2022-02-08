@@ -7,24 +7,16 @@ import { NextPage } from "next";
 import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import FormPasienModal from "@/components/Form/FormPasienModal";
+import FormBasisPengetahuanModal from "@/components/Form/FormBasisPengetahuanModal";
 
 const columns: Column[] = [
   {
-    Header: "Nama Pasien",
-    accessor: "namaPasien",
+    Header: "Rule",
+    accessor: "rule",
   },
   {
-    Header: "NIK",
-    accessor: "nik",
-  },
-  {
-    Header: "Jenis Kelamin",
-    accessor: "jenisKelamin",
-  },
-  {
-    Header: "Usia",
-    accessor: (originalRow: any) => `${originalRow.usia} Tahun`,
+    Header: "Kaidah",
+    accessor: "kaidah",
   },
   {
     Header: "Aksi",
@@ -32,11 +24,11 @@ const columns: Column[] = [
     Cell: ({ cell: { value } }) => {
       return (
         <Stack direction="row">
-          <FormPasienModal isEdit pasien={value} />
+          <FormBasisPengetahuanModal isEdit basisPengetahuan={value} />
           <DeleteDialog
-            title={"Hapus pasien?"}
-            apiRoute={`/api/pasien/${value.id}`}
-            mutateKey={`/api/pasien`}
+            title={"Hapus basis pengetahuan?"}
+            apiRoute={`/api/basis-pengetahuan/${value.id}`}
+            mutateKey={`/api/basis-pengetahuan`}
           />
         </Stack>
       );
@@ -44,25 +36,25 @@ const columns: Column[] = [
   },
 ];
 
-const Pasien: NextPage<{}> = () => {
-  const { data } = useSWR("/api/pasien", fetcher);
+const BasisPengetahuan: NextPage<{}> = () => {
+  const { data } = useSWR("/api/basis-pengetahuan", fetcher);
   const { data: session }: any = useSession();
   if (!data || !session) {
     return null;
   }
   return (
-    <Layout title="Pasien - SP Kulit" header="Pasien">
+    <Layout title="Basis Pengetahuan - SP Kulit" header="Basis Pengetahuan">
       <Flex w="full">
         <ChakraTable
           columns={columns}
           data={data}
           tableNumber={true}
           search={true}
-          rightButton={<FormPasienModal />}
+          rightButton={<FormBasisPengetahuanModal />}
         />
       </Flex>
     </Layout>
   );
 };
 
-export default Pasien;
+export default BasisPengetahuan;

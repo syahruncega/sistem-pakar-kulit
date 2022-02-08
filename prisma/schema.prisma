@@ -50,3 +50,11 @@ model Pasien {
   jenisKelamin String
   usia         Int
 }
+
+model BasisPengetahuan {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rule      String   @unique
+  kaidah    String   @db.Text
+}
