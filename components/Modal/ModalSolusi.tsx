@@ -11,6 +11,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import mdStyle from "@/styles/Markdown.module.css";
 
 const ModalSolusi: FC<{ solusi: string }> = ({ solusi }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,8 +27,13 @@ const ModalSolusi: FC<{ solusi: string }> = ({ solusi }) => {
         <ModalContent>
           <ModalHeader>Solusi</ModalHeader>
           <ModalCloseButton />
-          <ModalBody paddingLeft={10}>
-            <ReactMarkdown>{solusi}</ReactMarkdown>
+          <ModalBody>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              className={mdStyle.markdown}
+            >
+              {solusi}
+            </ReactMarkdown>
           </ModalBody>
 
           <ModalFooter>

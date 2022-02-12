@@ -1,0 +1,53 @@
+.markdown h1 {
+  font-size: 28px;
+  font-weight: 600;
+}
+.markdown h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+.markdown h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.markdown h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.markdown a {
+  color: #2b6cb0;
+}
+
+.markdown a:hover {
+  text-decoration: underline;
+}
+
+.markdown blockquote {
+  margin-left: 30px;
+  margin-right: auto;
+  background-color: #bee3f8;
+  border-left: 8px solid #63b3ed;
+  padding: 4px 8px;
+}
+
+.markdown ul {
+  padding-left: 20px;
+}
+
+.markdown ol {
+  padding-left: 20px;
+}
+
+.markdown pre {
+  background-color: #bee3f8;
+  border-radius: 8px;
+  padding: 2px 8px 2px 8px;
+  overflow: auto;
+}
+
+.markdown p code {
+  background-color: #bee3f8;
+  border-radius: 8px;
+  padding: 1px 6px 1px 6px;
+}
