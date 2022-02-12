@@ -6,6 +6,8 @@ import { prisma } from "@/libs/prisma";
 type BahanPemutihInput = {
   kodeBahanPemutih: string;
   jenisBahanPemutih: string;
+  presentaseKadarMax: string;
+  solusi: string;
 };
 
 export default async function handler(
@@ -35,6 +37,8 @@ export default async function handler(
         data: {
           kodeBahanPemutih: body.kodeBahanPemutih,
           jenisBahanPemutih: body.jenisBahanPemutih,
+          presentaseKadarMax: body.presentaseKadarMax,
+          solusi: body.solusi,
         },
       });
       res.status(201).json(createBahanPemutih);

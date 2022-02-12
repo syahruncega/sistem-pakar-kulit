@@ -23,6 +23,7 @@ import {
   useDisclosure,
   Button,
   Select,
+  Textarea,
 } from "@chakra-ui/react";
 import { BahanPemutih, User } from "@prisma/client";
 import validateEmail from "@/utils/validateEmail";
@@ -30,6 +31,8 @@ import validateEmail from "@/utils/validateEmail";
 type BahanPemutihInput = {
   kodeBahanPemutih: string;
   jenisBahanPemutih: string;
+  presentaseKadarMax: string;
+  solusi: string;
 };
 
 const FormBahanPemutihModal: FC<{
@@ -179,6 +182,36 @@ const FormBahanPemutihModal: FC<{
                 <FormErrorMessage>
                   {errors.jenisBahanPemutih?.message}
                 </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.presentaseKadarMax && true}>
+                <FormLabel htmlFor="presentaseKadarMax">
+                  Presentase Kadar Max
+                </FormLabel>
+                <Input
+                  id="presentaseKadarMax"
+                  defaultValue={bahanPemutih?.presentaseKadarMax || ""}
+                  type={"text"}
+                  placeholder="Presentase Kadar Max"
+                  {...register("presentaseKadarMax", {
+                    required: "Presentase kadar max wajib diisi",
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.presentaseKadarMax?.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.solusi && true}>
+                <FormLabel htmlFor="solusi">solusi</FormLabel>
+                <Textarea
+                  id="solusi"
+                  defaultValue={bahanPemutih?.solusi || ""}
+                  type={"text"}
+                  placeholder="Solusi"
+                  {...register("solusi", {
+                    required: "Solusi wajib diisi",
+                  })}
+                />
+                <FormErrorMessage>{errors.solusi?.message}</FormErrorMessage>
               </FormControl>
             </Stack>
           </ModalBody>

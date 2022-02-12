@@ -3,12 +3,13 @@ import FormPenggunaModal from "@/components/Form/FormPenggunaModal";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
-import { Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import FormBahanPemutihModal from "@/components/Form/FormBahanPemutihModal";
+import ModalSolusi from "@/components/Modal/ModalSolusi";
 
 const columns: Column[] = [
   {
@@ -18,6 +19,21 @@ const columns: Column[] = [
   {
     Header: "Jenis",
     accessor: "jenisBahanPemutih",
+  },
+  {
+    Header: "Presentase Kadar Max",
+    accessor: "presentaseKadarMax",
+  },
+  {
+    Header: "Solusi",
+    accessor: (originalRow) => originalRow,
+    Cell: ({ cell: { value } }) => {
+      return (
+        <Stack direction="row">
+          <ModalSolusi solusi={value.solusi} />
+        </Stack>
+      );
+    },
   },
   {
     Header: "Aksi",

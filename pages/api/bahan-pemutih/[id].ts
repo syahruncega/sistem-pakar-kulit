@@ -7,6 +7,8 @@ import hasher from "utils/hasher";
 type BahanPemutihInput = {
   kodeBahanPemutih: string;
   jenisBahanPemutih: string;
+  presentaseKadarMax: string;
+  solusi: string;
 };
 
 export default async function handler(
@@ -41,6 +43,8 @@ export default async function handler(
         data: {
           kodeBahanPemutih: body.kodeBahanPemutih,
           jenisBahanPemutih: body.jenisBahanPemutih,
+          presentaseKadarMax: body.presentaseKadarMax,
+          solusi: body.solusi,
         },
       });
       res.status(200).send(updateBahanPemutih);
