@@ -196,7 +196,6 @@ const FormPasienModal: FC<{
               </FormControl>
               <FormControl>
                 <FormLabel>Jenis Kelamin</FormLabel>
-
                 <RadioGroup defaultValue={pasien?.jenisKelamin || "Laki-laki"}>
                   <Stack direction="row" spacing={6}>
                     <Radio value="Laki-laki" {...register("jenisKelamin")}>

@@ -178,7 +178,6 @@ const FormBasisPengetahuanModal: FC<{
                     required: "Kaidah wajib diisi",
                   })}
                 />
-
                 <FormErrorMessage>{errors.kaidah?.message}</FormErrorMessage>
               </FormControl>
             </Stack>

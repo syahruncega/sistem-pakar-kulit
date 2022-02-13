@@ -21,7 +21,7 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const basisPengetahuan = await prisma.basisPengetahuan.findMany({
-        orderBy: { updatedAt: "desc" },
+        orderBy: { rule: "asc" },
       });
       res.status(200).json(basisPengetahuan);
     } catch (error) {

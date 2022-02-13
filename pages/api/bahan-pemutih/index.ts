@@ -23,7 +23,7 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const bahanPemutih = await prisma.bahanPemutih.findMany({
-        orderBy: { updatedAt: "desc" },
+        orderBy: { kodeBahanPemutih: "asc" },
       });
       res.status(200).json(bahanPemutih);
     } catch (error) {

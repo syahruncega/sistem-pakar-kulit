@@ -22,7 +22,7 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const gejala = await prisma.gejala.findMany({
-        orderBy: { updatedAt: "desc" },
+        orderBy: { kodeGejala: "asc" },
       });
       res.status(200).json(gejala);
     } catch (error) {
