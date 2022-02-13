@@ -11,6 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Gejala } from "@prisma/client";
+import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Column } from "react-table";
@@ -20,6 +21,7 @@ import ChakraTable from "../Table/ChakraTable";
 
 const TabPilihPasien: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   const { data: dataPasien } = useSWR<Gejala[]>("/api/pasien", fetcher);
+  const { setPasien } = useSistemPakar();
 
   if (!dataPasien) {
     return null;
@@ -51,6 +53,7 @@ const TabPilihPasien: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
             size={"xs"}
             colorScheme="teal"
             onClick={() => {
+              setPasien(value);
               setTabIndex(1);
             }}
           >

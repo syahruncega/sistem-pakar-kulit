@@ -6,18 +6,17 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  HStack,
   Select,
-  TabPanel,
-  Text,
 } from "@chakra-ui/react";
 import { Gejala } from "@prisma/client";
+import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useSWR from "swr";
 
 const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   const { data: dataGejala } = useSWR<Gejala[]>("/api/gejala", fetcher);
+  const { setDiagnosa } = useSistemPakar();
   const {
     register,
     handleSubmit,
@@ -33,7 +32,8 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   }
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data);
+    setDiagnosa(data);
+    setTabIndex(2);
   };
 
   return (
