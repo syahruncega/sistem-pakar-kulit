@@ -1,0 +1,49 @@
+import Layout from "@/components/Layout";
+import { Flex } from "@chakra-ui/react";
+import mdStyle from "@/styles/Markdown.module.css";
+
+{/* START */}
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+Regular Text
+
+- One
+- Two
+- Three
+
+1. One
+2. Two
+3. Three
+
+```
+hehehee
+```
+
+> Test
+
+Checkout my React component:
+
+{/* END */}
+
+export default ({ children }) => (
+  <Layout title="Halaman Materi - SP Kulit" header="Halaman Materi">
+    <Flex
+      className={mdStyle.markdown}
+      flexDirection={"column"}
+      bgColor={"white"}
+      p={4}
+      rounded="lg"
+      boxShadow="lg"
+      w="full"
+    >
+      {children}
+    </Flex>
+  </Layout>
+);

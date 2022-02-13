@@ -29,14 +29,18 @@
   background-color: #bee3f8;
   border-left: 8px solid #63b3ed;
   padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
 .markdown ul {
   padding-left: 20px;
+  margin-bottom: 10px;
 }
 
 .markdown ol {
   padding-left: 20px;
+  margin-bottom: 10px;
 }
 
 .markdown pre {
@@ -44,6 +48,7 @@
   border-radius: 8px;
   padding: 2px 8px 2px 8px;
   overflow: auto;
+  margin-bottom: 10px;
 }
 
 .markdown p code {
