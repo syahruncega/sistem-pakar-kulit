@@ -1,4 +1,8 @@
-import { ArrowLeftBoldIcon, TickSquareBoldIcon } from "@/styles/iconsax";
+import {
+  ArrowLeftBoldIcon,
+  TickSquareBoldIcon,
+  TrushSquareBoldIcon,
+} from "@/styles/iconsax";
 import fetcher from "@/utils/fetcher";
 import {
   Button,
@@ -20,9 +24,6 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   const {
     register,
     handleSubmit,
-    setError,
-    setFocus,
-    getValues,
     reset,
     formState: { errors },
   } = useForm<any>();
@@ -70,9 +71,9 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           </FormControl>
         );
       })}
-      <Center>
+      <Center mt={2}>
         <Button
-          colorScheme={"orange"}
+          colorScheme={"green"}
           mr={4}
           onClick={() => {
             setTabIndex(0);
@@ -80,6 +81,16 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
         >
           Kembali
+        </Button>
+        <Button
+          colorScheme={"orange"}
+          mr={4}
+          onClick={() => {
+            reset();
+          }}
+          rightIcon={<TrushSquareBoldIcon mt={"2px"} />}
+        >
+          Reset
         </Button>
         <Button
           type="submit"
