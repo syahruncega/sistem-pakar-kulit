@@ -5,6 +5,8 @@ type ContextType = {
   setPasien: Function;
   diagnosa: any;
   setDiagnosa: Function;
+  gejala: any;
+  setGejala: Function;
 };
 
 const ContextDefaultValues: ContextType = {
@@ -12,6 +14,8 @@ const ContextDefaultValues: ContextType = {
   setPasien: () => {},
   diagnosa: null,
   setDiagnosa: () => {},
+  gejala: null,
+  setGejala: () => {},
 };
 
 const SistemPakarContext = createContext<ContextType>(ContextDefaultValues);
@@ -26,6 +30,7 @@ type Props = {
 
 export function SistemPakarProvider({ children }: Props) {
   const [pasien, setPasien] = useState();
+  const [gejala, setGejala] = useState();
   const [diagnosa, setDiagnosa] = useState();
 
   const value = {
@@ -33,6 +38,8 @@ export function SistemPakarProvider({ children }: Props) {
     setPasien,
     diagnosa,
     setDiagnosa,
+    gejala,
+    setGejala,
   };
 
   return (

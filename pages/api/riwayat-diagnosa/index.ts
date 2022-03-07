@@ -3,9 +3,12 @@ import { getSession } from "next-auth/react";
 
 import { prisma } from "@/libs/prisma";
 
-type BasisPengetahuanInput = {
-  rule: string;
-  kaidah: string;
+type RiwayatDiagnosaInputs = {
+  idPasien: string;
+  idBahanPemutih: string;
+  gejala: any;
+  detail: any;
+  nilaiCF: number;
 };
 
 export default async function handler(
@@ -20,35 +23,45 @@ export default async function handler(
 
   if (req.method === "GET") {
     try {
-      const basisPengetahuan = await prisma.basisPengetahuan.findMany({
-        orderBy: { rule: "asc" },
+      const riwayatDiagnosa = await prisma.riwayatDiagnosa.findMany({
+        orderBy: { updatedAt: "desc" },
         include: {
           bahanPemutih: true,
+          pasien: true,
         },
       });
-      res.status(200).json(basisPengetahuan);
+      res.status(200).json(riwayatDiagnosa);
     } catch (error) {
       console.error(error);
       res.status(500).json(error);
     }
   } else if (req.method === "POST") {
     try {
-      const body: BasisPengetahuanInput = req.body;
-      const createBasisPengetahuan = await prisma.basisPengetahuan.create({
+      const body: RiwayatDiagnosaInputs = req.body;
+      const createRiwayatDiagnosa = await prisma.riwayatDiagnosa.create({
         data: {
-          rule: body.rule,
-          kaidah: body.kaidah,
+          gejala: body.gejala.toString(),
+          detail: body.detail.toString(),
+          nilaiCF: body.nilaiCF,
+          pasien: {
+            connect: {
+              id: body.idPasien,
+            },
+          },
+          bahanPemutih: {
+            connect: {
+              id: body.idBahanPemutih,
+            },
+          },
         },
         include: {
           bahanPemutih: true,
+          pasien: true,
         },
       });
-      res.status(201).json(createBasisPengetahuan);
+      res.status(201).json(createRiwayatDiagnosa);
     } catch (error: any) {
       console.error(error);
-      if (error.code === "P2002") {
-        res.status(200).send("rule_unique");
-      }
       res.status(500);
     }
   } else {

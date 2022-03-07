@@ -24,6 +24,9 @@ export default async function handler(
     try {
       const bahanPemutih = await prisma.bahanPemutih.findMany({
         orderBy: { kodeBahanPemutih: "asc" },
+        include: {
+          basisPengetahuan: true,
+        },
       });
       res.status(200).json(bahanPemutih);
     } catch (error) {

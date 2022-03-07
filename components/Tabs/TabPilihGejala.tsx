@@ -12,15 +12,29 @@ import {
   FormLabel,
   Select,
 } from "@chakra-ui/react";
-import { Gejala } from "@prisma/client";
+import { BahanPemutih, BasisPengetahuan, Gejala } from "@prisma/client";
 import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import useSWR from "swr";
+
+interface BasisPengetahuanAll extends BasisPengetahuan {
+  bahanPemutih: {
+    [B in keyof BahanPemutih]?: string;
+  };
+}
+
+interface SelectedRule extends BasisPengetahuanAll {
+  cfValue: number;
+}
 
 const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   const { data: dataGejala } = useSWR<Gejala[]>("/api/gejala", fetcher);
-  const { setDiagnosa } = useSistemPakar();
+  const { data: dataRule } = useSWR<BasisPengetahuanAll[]>(
+    "/api/basis-pengetahuan",
+    fetcher
+  );
+  const { setGejala, setDiagnosa } = useSistemPakar();
   const {
     register,
     handleSubmit,
@@ -28,12 +42,80 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
     formState: { errors },
   } = useForm<any>();
 
-  if (!dataGejala) {
+  if (!dataGejala || !dataRule) {
     return null;
   }
 
+  function getCFUser(value: string) {
+    if (value === "Mungkin") {
+      return 0.4;
+    } else if (value === "Cukup Yakin") {
+      return 0.6;
+    } else if (value === "Yakin") {
+      return 0.8;
+    } else if (value === "Sangat Yakin") {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  function calculateRuleCF(value1: number, value2: number) {
+    return value1 + value2 * (1.0 - value1);
+  }
+
   const onSubmit: SubmitHandler<any> = async (data) => {
-    setDiagnosa(data);
+    //*FORWARD CHAINING
+    let selectedRule: BasisPengetahuanAll[] = [];
+    dataGejala.map((gejala) => {
+      if (data[`${gejala.kodeGejala}`] !== "") {
+        dataRule.map((rule) => {
+          if (
+            rule.kaidah.includes(gejala.kodeGejala) &&
+            !selectedRule.includes(rule)
+          ) {
+            selectedRule.push(rule);
+          }
+        });
+      }
+    });
+
+    //*CERTAINTY FACTOR
+    let certaintyFactor: SelectedRule[] = [];
+    selectedRule.map((rule) => {
+      //**Calculate CF Value
+      let cfValue: number[] = [];
+      dataGejala.map((gejala) => {
+        if (rule.kaidah.includes(gejala.kodeGejala)) {
+          cfValue.push(
+            getCFUser(data[`${gejala.kodeGejala}`]) * gejala.nilaiKepastian
+          );
+        }
+      });
+
+      //**Calculate Combined CF Value (Rule)
+      let combined = 0;
+      for (let i = 1; i < cfValue.length; i++) {
+        i === 1
+          ? (combined = calculateRuleCF(cfValue[i - 1], cfValue[i]))
+          : (combined = calculateRuleCF(combined, cfValue[i]));
+      }
+      certaintyFactor.push({ ...rule, cfValue: combined });
+    });
+    console.log(certaintyFactor);
+    Object.keys(data).forEach((key) => {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    });
+
+    //Sort certainty Factor
+    certaintyFactor.sort(function (a, b) {
+      return b.cfValue - a.cfValue;
+    });
+
+    setGejala(data);
+    setDiagnosa(certaintyFactor);
     setTabIndex(2);
   };
 
