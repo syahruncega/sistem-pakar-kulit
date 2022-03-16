@@ -7,14 +7,23 @@ import {
   ClipboardTextBulkIcon,
   Profile2UserBulkIcon,
 } from "@/styles/iconsax";
+import fetcher from "@/utils/fetcher";
 import { Button, Flex, Grid, Link } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import NextLink from "next/link";
+import useSWR from "swr";
 
 const Home: NextPage = () => {
+  const { data } = useSWR("/api/count", fetcher);
+  const { data: session }: any = useSession();
+  if (!data || !session) {
+    return null;
+  }
+
   const iconProps = {
     p: "8px",
-    fontSize: 40,
+    fontSize: 36,
     rounded: "full",
     mr: 3,
   };
@@ -25,7 +34,7 @@ const Home: NextPage = () => {
           <DashboardItem
             href="/basis-pengetahuan"
             label="Basis Pengetahuan"
-            color="pink.500"
+            value={`${data.basisPengetahuan}`}
             icon={
               <BookBulkIcon
                 color={"pink.500"}
@@ -37,7 +46,7 @@ const Home: NextPage = () => {
           <DashboardItem
             href="/gejala"
             label="Gejala"
-            color="green.500"
+            value={`${data.gejala}`}
             icon={
               <ClipboardTextBulkIcon
                 color={"green.500"}
@@ -49,7 +58,7 @@ const Home: NextPage = () => {
           <DashboardItem
             href="/bahan-pemutih"
             label="Bahan Pemutih"
-            color="purple.500"
+            value={`${data.bahanPemutih}`}
             icon={
               <BubbleBulkIcon
                 color={"purple.500"}
@@ -61,7 +70,7 @@ const Home: NextPage = () => {
           <DashboardItem
             href="/pasien"
             label="Pasien"
-            color="blue.500"
+            value={`${data.pasien}`}
             icon={
               <Profile2UserBulkIcon
                 color={"blue.500"}
@@ -73,7 +82,7 @@ const Home: NextPage = () => {
           <DashboardItem
             href="/riwayat-diagnosa"
             label="Riwayat Diagnosa"
-            color="yellow.500"
+            value={`${data.riwayatDiagnosa}`}
             icon={
               <Profile2UserBulkIcon
                 color={"yellow.500"}

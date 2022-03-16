@@ -52,10 +52,12 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
         size={"lg"}
         mb={2}
       >{`${diagnosa[0].bahanPemutih.jenisBahanPemutih}`}</Heading>
-      <Heading
-        size={"md"}
-        mb={4}
-      >{`Presentasi (${diagnosa[0].cfValue} %)`}</Heading>
+      <Heading size={"md"} mb={4}>{`Presentasi (${Math.round(
+        diagnosa[0].cfValue * 100
+      )} %)`}</Heading>
+      <Text size={"md"} fontWeight="bold" mb={2}>
+        {`Kadar Maksimal Penggunaan: ${diagnosa[0].bahanPemutih.presentaseKadarMax}`}
+      </Text>
       <Text size={"md"} fontWeight="bold" mb={2}>
         Solusi:
       </Text>

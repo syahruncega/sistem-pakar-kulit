@@ -37,7 +37,12 @@ const ModalHasilDiagnosa: FC<{
             <Heading size={"lg"} mb={2}>
               {bahanPemutih.jenisBahanPemutih}
             </Heading>
-            <Heading size={"md"} mb={4}>{`Presentasi (${nilaiCF} %)`}</Heading>
+            <Heading size={"md"} mb={4}>{`Presentasi (${Math.round(
+              nilaiCF * 100
+            )} %)`}</Heading>
+            <Text size={"md"} fontWeight="bold" mb={2}>
+              {`Kadar Maksimal Penggunaan: ${bahanPemutih.presentaseKadarMax}`}
+            </Text>
             <Text size={"md"} fontWeight="bold" mb={2}>
               Solusi:
             </Text>

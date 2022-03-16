@@ -5,9 +5,9 @@ import { Center, Flex, Heading, Text } from "@chakra-ui/react";
 const DashboardItem: FC<{
   href: string;
   label: string;
+  value: string;
   icon: JSX.Element;
-  color: string;
-}> = ({ href, label, icon, color }) => {
+}> = ({ href, label, icon, value }) => {
   return (
     <NextLink href={href} passHref>
       <Flex
@@ -15,7 +15,7 @@ const DashboardItem: FC<{
         rounded={"lg"}
         bgColor={"white"}
         w="full"
-        h={"100px"}
+        h={"auto"}
         boxShadow={"lg"}
         py={2}
         px={4}
@@ -33,7 +33,7 @@ const DashboardItem: FC<{
           </Text>
         </Flex>
         <Center>
-          <Heading color={"gray.600"}>20</Heading>
+          <Heading color={"gray.600"}>{value}</Heading>
         </Center>
       </Flex>
     </NextLink>
