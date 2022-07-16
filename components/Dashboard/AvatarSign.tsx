@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { FC } from "react";
-import LogoutDialog from "./Modal/LogoutDialog";
+import LogoutDialog from "../Modal/LogoutDialog";
 import NextLink from "next/link";
 
 const AvatarSign: FC<{}> = () => {

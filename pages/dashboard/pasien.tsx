@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";

@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import fetcher from "@/utils/fetcher";
 import { NextPage } from "next";
 import useSWR from "swr";

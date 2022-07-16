@@ -1,5 +1,5 @@
-import DashboardItem from "@/components/DashboardItem";
-import Layout from "@/components/Layout";
+import DashboardItem from "@/components/Dashboard/DashboardItem";
+import Layout from "@/components/Dashboard/Layout";
 import {
   ArrowRightBoldIcon,
   BookBulkIcon,
