@@ -25,7 +25,7 @@ const AvatarSign: FC<{}> = () => {
           <Text fontWeight={"medium"} color={"gray.600"} mr={3}>
             {session?.user?.name}
           </Text>
-          <Avatar name="Syahrun Cega" size={"sm"} src="#" />
+          <Avatar name={session?.user?.name!} size={"sm"} src="#" />
         </Flex>
       </MenuButton>
       <MenuList>

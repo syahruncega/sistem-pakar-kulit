@@ -41,19 +41,7 @@ model BahanPemutih {
   jenisBahanPemutih  String            @unique
   presentaseKadarMax String
   solusi             String            @db.Text
-  riwayatDiagnosa    RiwayatDiagnosa[]
   basisPengetahuan   BasisPengetahuan?
-}
-
-model Pasien {
-  id              String            @id @default(uuid())
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  namaPasien      String
-  nik             String            @unique
-  jenisKelamin    String
-  usia            Int
-  riwayatDiagnosa RiwayatDiagnosa[]
 }
 
 model BasisPengetahuan {
@@ -64,17 +52,4 @@ model BasisPengetahuan {
   kaidah           String        @db.Text
   bahanPemutih     BahanPemutih? @relation(fields: [kodeBahanPemutih], references: [kodeBahanPemutih])
   kodeBahanPemutih String?       @unique
-}
-
-model RiwayatDiagnosa {
-  id             String       @id @default(uuid())
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  pasien         Pasien       @relation(fields: [idPasien], references: [id])
-  idPasien       String
-  bahanPemutih   BahanPemutih @relation(fields: [idBahanPemutih], references: [id])
-  idBahanPemutih String
-  nilaiCF        Float
-  gejala         String       @db.Text
-  detail         String       @db.Text
 }

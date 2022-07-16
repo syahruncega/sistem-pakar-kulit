@@ -67,30 +67,6 @@ const Dashboard: NextPage = () => {
               />
             }
           />
-          <DashboardItem
-            href="/pasien"
-            label="Pasien"
-            value={`${data.pasien}`}
-            icon={
-              <Profile2UserBulkIcon
-                color={"blue.500"}
-                bgColor={"blue.100"}
-                {...iconProps}
-              />
-            }
-          />
-          <DashboardItem
-            href="/riwayat-diagnosa"
-            label="Riwayat Diagnosa"
-            value={`${data.riwayatDiagnosa}`}
-            icon={
-              <Profile2UserBulkIcon
-                color={"yellow.500"}
-                bgColor={"yellow.100"}
-                {...iconProps}
-              />
-            }
-          />
         </Grid>
         <Flex
           w="full"

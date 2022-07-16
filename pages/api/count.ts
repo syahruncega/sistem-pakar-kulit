@@ -23,18 +23,12 @@ export default async function handler(
       const basisPengetahuan = await prisma.basisPengetahuan.count();
       const gejala = await prisma.gejala.count();
       const bahanPemutih = await prisma.bahanPemutih.count();
-      const pasien = await prisma.pasien.count();
-      const riwayatDiagnosa = await prisma.pasien.count();
 
-      res
-        .status(200)
-        .json({
-          basisPengetahuan,
-          gejala,
-          bahanPemutih,
-          pasien,
-          riwayatDiagnosa,
-        });
+      res.status(200).json({
+        basisPengetahuan,
+        gejala,
+        bahanPemutih,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json(error);
