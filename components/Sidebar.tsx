@@ -67,7 +67,7 @@ const Sidebar: FC<{}> = () => {
           </Text>
           <NavItem
             label="Pengguna"
-            href="/pengguna"
+            href="/dashboard/pengguna"
             icon={<UserEditBulkIcon {...navItemProps} />}
             iconActive={<UserEditBulkIcon {...navItemPropsActive} />}
           />
@@ -81,7 +81,7 @@ const Sidebar: FC<{}> = () => {
         </Text>
         <NavItem
           label="Dashboard"
-          href="/"
+          href="/dashboard"
           icon={<ElementBulkIcon {...navItemProps} />}
           iconActive={<ElementBulkIcon {...navItemPropsActive} />}
         />
@@ -96,19 +96,19 @@ const Sidebar: FC<{}> = () => {
       <Flex mt={2} mb={4} flexDirection={"column"}>
         <NavItem
           label="Basis Pengetahuan"
-          href="/basis-pengetahuan"
+          href="/dashboard/basis-pengetahuan"
           icon={<BookBulkIcon {...navItemProps} />}
           iconActive={<BookBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
           label="Gejala"
-          href="/gejala"
+          href="/dashboard/gejala"
           icon={<ClipboardTextBulkIcon {...navItemProps} />}
           iconActive={<ClipboardTextBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
           label="Bahan Pemutih"
-          href="/bahan-pemutih"
+          href="/dashboard/bahan-pemutih"
           icon={<BubbleBulkIcon {...navItemProps} />}
           iconActive={<BubbleBulkIcon {...navItemPropsActive} />}
         />
@@ -126,13 +126,13 @@ const Sidebar: FC<{}> = () => {
         </Text>
         <NavItem
           label="Pasien"
-          href="/pasien"
+          href="/dashboard/pasien"
           icon={<Profile2UserBulkIcon {...navItemProps} />}
           iconActive={<Profile2UserBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
           label="Riwayat Diagnosa"
-          href="/riwayat-diagnosa"
+          href="/dashboard/riwayat-diagnosa"
           icon={<StickyNoteBulkIcon {...navItemProps} />}
           iconActive={<StickyNoteBulkIcon {...navItemPropsActive} />}
         />

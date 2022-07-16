@@ -28,7 +28,7 @@ const AvatarSign: FC<{}> = () => {
         </Flex>
       </MenuButton>
       <MenuList>
-        <NextLink href={"/profil"} passHref>
+        <NextLink href={"/dashboard/profil"} passHref>
           <MenuItem
             icon={<ProfileBulkIcon fontSize={20} color={"facebook.600"} />}
           >
