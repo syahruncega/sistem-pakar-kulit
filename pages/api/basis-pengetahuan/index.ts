@@ -14,10 +14,6 @@ export default async function handler(
 ) {
   const session = await getSession({ req });
 
-  if (!session) {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-
   if (req.method === "GET") {
     try {
       const basisPengetahuan = await prisma.basisPengetahuan.findMany({
@@ -32,6 +28,9 @@ export default async function handler(
       res.status(500).json(error);
     }
   } else if (req.method === "POST") {
+    if (!session) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
     try {
       const body: BasisPengetahuanInput = req.body;
       const createBasisPengetahuan = await prisma.basisPengetahuan.create({

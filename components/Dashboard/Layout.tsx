@@ -1,4 +1,4 @@
-import { Avatar, Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import { FC } from "react";
 import AvatarSign from "./AvatarSign";
@@ -11,7 +11,7 @@ const Layout: FC<{ title?: string; header?: string }> = ({
 }) => {
   return (
     <>
-      <Head>{title ? <title>{title}</title> : <title>SP Kulit</title>}</Head>
+      <Head>{<title>{title ?? "e-Clinic"}</title>}</Head>
 
       <Flex bgColor={"gray.100"} minH={"100vh"} px={6}>
         <Sidebar />

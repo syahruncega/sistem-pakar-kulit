@@ -14,31 +14,31 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  async function saveToRiwayatDiagnosa() {
-    setLoading(true);
-    console.log(diagnosa[0].cfValue);
-    try {
-      const res = await axios.post("/api/riwayat-diagnosa", {
-        idPasien: pasien.id,
-        idBahanPemutih: diagnosa[0].bahanPemutih.id,
-        gejala: gejala,
-        detail: diagnosa,
-        nilaiCF: diagnosa[0].cfValue,
-      });
-      showToast({
-        title: "Berhasil",
-        description: "Data berhasil disimpan.",
-      });
-      router.push("/");
-    } catch (error: any) {
-      showToast({
-        title: "Terjadi Kesalahan",
-        description: error.message,
-        status: "error",
-      });
-    }
-    setLoading(false);
-  }
+  // async function saveToRiwayatDiagnosa() {
+  //   setLoading(true);
+  //   console.log(diagnosa[0].cfValue);
+  //   try {
+  //     const res = await axios.post("/api/riwayat-diagnosa", {
+  //       idPasien: pasien.id,
+  //       idBahanPemutih: diagnosa[0].bahanPemutih.id,
+  //       gejala: gejala,
+  //       detail: diagnosa,
+  //       nilaiCF: diagnosa[0].cfValue,
+  //     });
+  //     showToast({
+  //       title: "Berhasil",
+  //       description: "Data berhasil disimpan.",
+  //     });
+  //     router.push("/");
+  //   } catch (error: any) {
+  //     showToast({
+  //       title: "Terjadi Kesalahan",
+  //       description: error.message,
+  //       status: "error",
+  //     });
+  //   }
+  //   setLoading(false);
+  // }
 
   return (
     <Flex
@@ -69,7 +69,7 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           colorScheme={"green"}
           mr={4}
           onClick={() => {
-            setTabIndex(1);
+            setTabIndex(0);
           }}
           rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
           disabled={loading}
@@ -80,7 +80,7 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           colorScheme={"facebook"}
           rightIcon={<TickSquareBoldIcon mt={"2px"} />}
           mr={4}
-          onClick={saveToRiwayatDiagnosa}
+          onClick={() => router.push("/")}
           isLoading={loading}
         >
           Selesai

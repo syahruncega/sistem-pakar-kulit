@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { FC } from "react";
@@ -19,7 +20,7 @@ const AvatarSign: FC<{}> = () => {
 
   return (
     <Menu>
-      <MenuButton>
+      <MenuButton as={Button} variant="ghost">
         <Flex align={"center"}>
           <Text fontWeight={"medium"} color={"gray.600"} mr={3}>
             {session?.user?.name}

@@ -1,4 +1,4 @@
-import Layout from "@/components/Dashboard/Layout";
+import Shell from "@/components/Shell";
 import { Flex } from "@chakra-ui/react";
 import mdStyle from "@/styles/Markdown.module.css";
 
@@ -33,7 +33,7 @@ Checkout my React component:
 {/* END */}
 
 export default ({ children }) => (
-  <Layout title="Halaman Materi - SP Kulit" header="Halaman Materi">
+  <Shell title="Halaman Materi - e-Clinic" header="Halaman Materi">
     <Flex
       className={mdStyle.markdown}
       flexDirection={"column"}
@@ -45,5 +45,5 @@ export default ({ children }) => (
     >
       {children}
     </Flex>
-  </Layout>
+  </Shell>
 );

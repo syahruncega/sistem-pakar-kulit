@@ -15,10 +15,6 @@ export default async function handler(
 ) {
   const session = await getSession({ req });
 
-  if (!session) {
-    res.status(401).json({ message: "Unauthorized" });
-  }
-
   if (req.method === "GET") {
     try {
       const gejala = await prisma.gejala.findMany({
@@ -30,6 +26,9 @@ export default async function handler(
       res.status(500).json(error);
     }
   } else if (req.method === "POST") {
+    if (!session) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
     try {
       const body: GejalaInput = req.body;
       const createGejala = await prisma.gejala.create({

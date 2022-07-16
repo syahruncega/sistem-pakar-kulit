@@ -60,45 +60,16 @@ const Sidebar: FC<{}> = () => {
         </Heading>
       </Flex>
       <Divider />
-      {session?.user?.role === "Admin" && (
-        <Flex mt={4} flexDirection={"column"}>
-          <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
-            ADMIN
-          </Text>
-          <NavItem
-            label="Pengguna"
-            href="/dashboard/pengguna"
-            icon={<UserEditBulkIcon {...navItemProps} />}
-            iconActive={<UserEditBulkIcon {...navItemPropsActive} />}
-          />
-          <Divider mt={4} />
-        </Flex>
-      )}
 
-      <Flex my={4} flexDirection={"column"}>
+      <Flex mt={4} flexDirection={"column"}>
         <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
-          USER
+          ADMIN
         </Text>
         <NavItem
-          label="Dashboard"
-          href="/dashboard"
-          icon={<ElementBulkIcon {...navItemProps} />}
-          iconActive={<ElementBulkIcon {...navItemPropsActive} />}
-        />
-        <NavItem
-          label="Halaman Materi"
-          href="/halaman-materi"
-          icon={<ClipboardBulkIcon {...navItemProps} />}
-          iconActive={<ClipboardBulkIcon {...navItemPropsActive} />}
-        />
-      </Flex>
-      <Divider />
-      <Flex mt={2} mb={4} flexDirection={"column"}>
-        <NavItem
-          label="Basis Pengetahuan"
-          href="/dashboard/basis-pengetahuan"
-          icon={<BookBulkIcon {...navItemProps} />}
-          iconActive={<BookBulkIcon {...navItemPropsActive} />}
+          label="Pengguna"
+          href="/dashboard/pengguna"
+          icon={<UserEditBulkIcon {...navItemProps} />}
+          iconActive={<UserEditBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
           label="Gejala"
@@ -107,19 +78,19 @@ const Sidebar: FC<{}> = () => {
           iconActive={<ClipboardTextBulkIcon {...navItemPropsActive} />}
         />
         <NavItem
+          label="Basis Pengetahuan"
+          href="/dashboard/basis-pengetahuan"
+          icon={<BookBulkIcon {...navItemProps} />}
+          iconActive={<BookBulkIcon {...navItemPropsActive} />}
+        />
+        <NavItem
           label="Bahan Pemutih"
           href="/dashboard/bahan-pemutih"
           icon={<BubbleBulkIcon {...navItemProps} />}
           iconActive={<BubbleBulkIcon {...navItemPropsActive} />}
         />
-        {/* <NavItem
-          label="Solusi"
-          href="/solusi"
-          icon={<ClipboardTickBulkIcon {...navItemProps} />}
-          iconActive={<ClipboardTickBulkIcon {...navItemPropsActive} />}
-        /> */}
       </Flex>
-      <Divider />
+      {/* <Divider />
       <Flex my={4} flexDirection={"column"}>
         <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
           DIAGNOSA
@@ -136,7 +107,7 @@ const Sidebar: FC<{}> = () => {
           icon={<StickyNoteBulkIcon {...navItemProps} />}
           iconActive={<StickyNoteBulkIcon {...navItemPropsActive} />}
         />
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };

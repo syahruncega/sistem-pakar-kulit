@@ -17,6 +17,7 @@ import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import useSWR from "swr";
+import showToast from "../CustomToast";
 
 interface BasisPengetahuanAll extends BasisPengetahuan {
   bahanPemutih: {
@@ -80,6 +81,15 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       }
     });
 
+    if (selectedRule.length === 0) {
+      showToast({
+        title: "Terjadi kesalahan",
+        description: "Harap memilih minimal satu gejala untuk mendiagnosa",
+        status: "error",
+      });
+      return;
+    }
+
     //*CERTAINTY FACTOR
     let certaintyFactor: SelectedRule[] = [];
     selectedRule.map((rule) => {
@@ -103,6 +113,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       certaintyFactor.push({ ...rule, cfValue: combined });
     });
     console.log(certaintyFactor);
+
     Object.keys(data).forEach((key) => {
       if (data[key] === "") {
         delete data[key];
@@ -116,7 +127,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
 
     setGejala(data);
     setDiagnosa(certaintyFactor);
-    setTabIndex(2);
+    setTabIndex(1);
   };
 
   return (
@@ -154,16 +165,6 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
         );
       })}
       <Center mt={2}>
-        <Button
-          colorScheme={"green"}
-          mr={4}
-          onClick={() => {
-            setTabIndex(0);
-          }}
-          rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
-        >
-          Kembali
-        </Button>
         <Button
           colorScheme={"orange"}
           mr={4}
