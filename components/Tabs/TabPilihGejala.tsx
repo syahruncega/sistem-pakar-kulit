@@ -48,12 +48,8 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   }
 
   function getCFUser(value: string) {
-    if (value === "Mungkin") {
-      return 0.4;
-    } else if (value === "Cukup Yakin") {
-      return 0.6;
-    } else if (value === "Yakin") {
-      return 0.8;
+    if (value === "Yakin") {
+      return 0.5;
     } else if (value === "Sangat Yakin") {
       return 1;
     } else {
@@ -155,8 +151,6 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
                 {...register(`${gejala.kodeGejala}`)}
               >
                 <option value="Tidak">Tidak</option>
-                <option value="Mungkin">Mungkin</option>
-                <option value="Cukup Yakin">Cukup Yakin</option>
                 <option value="Yakin">Yakin</option>
                 <option value="Sangat Yakin">Sangat Yakin</option>
               </Select>
