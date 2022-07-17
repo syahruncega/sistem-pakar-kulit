@@ -35,7 +35,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
     "/api/basis-pengetahuan",
     fetcher
   );
-  const { setGejala, setDiagnosa } = useSistemPakar();
+  const { setJawaban, setDiagnosa } = useSistemPakar();
   const {
     register,
     handleSubmit,
@@ -121,7 +121,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       return b.cfValue - a.cfValue;
     });
 
-    setGejala(data);
+    setJawaban({ pilihan: data, gejala: dataGejala });
     setDiagnosa(certaintyFactor);
     setTabIndex(1);
   };
