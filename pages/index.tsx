@@ -28,11 +28,16 @@ const Home: NextPage = () => {
               </Button>
             </NextLink>
           </Box>
-          <Image
-            src="./male-doctor.png"
-            maxW={["240", "280", "340px"]}
-            alt="Doctor"
-          />
+          <Link
+            href="https://www.freepik.com/psd/doctor-character"
+            target={"_blank"}
+          >
+            <Image
+              src="./male-doctor.png"
+              maxW={["240", "280", "340px"]}
+              alt="Doctor character psd created by mamewmy - www.freepik.com"
+            />
+          </Link>
         </Flex>
         <Box
           maxW={"680px"}
