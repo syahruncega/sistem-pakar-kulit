@@ -60,7 +60,7 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           colorScheme={"facebook"}
           rightIcon={<TickSquareBoldIcon mt={"2px"} />}
           mr={4}
-          onClick={() => {}}
+          onClick={() => router.push("/")}
           isLoading={loading}
         >
           Selesai
