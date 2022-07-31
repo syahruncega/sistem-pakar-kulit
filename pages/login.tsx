@@ -72,6 +72,7 @@ const Login: NextPage = () => {
       }
     } catch (error) {
       setErrorMessage(error as any);
+      console.log(error);
     }
 
     setLoading(false);

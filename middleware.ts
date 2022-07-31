@@ -13,11 +13,6 @@ export async function middleware(req: NextRequest) {
 
   const url = req.nextUrl.clone();
 
-  if (token && req.nextUrl.pathname.startsWith("/login")) {
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
-  }
-
   if (req.nextUrl.pathname.startsWith("/login")) {
     if (token) {
       url.pathname = "/dashboard";
