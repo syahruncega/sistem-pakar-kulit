@@ -1,17 +1,14 @@
 import DashboardItem from "@/components/Dashboard/DashboardItem";
 import Layout from "@/components/Dashboard/Layout";
 import {
-  ArrowRightBoldIcon,
   BookBulkIcon,
   BubbleBulkIcon,
   ClipboardTextBulkIcon,
-  Profile2UserBulkIcon,
 } from "@/styles/iconsax";
 import fetcher from "@/utils/fetcher";
 import { Button, Flex, Grid, Link } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import NextLink from "next/link";
 import useSWR from "swr";
 
 const Dashboard: NextPage = () => {
@@ -30,9 +27,17 @@ const Dashboard: NextPage = () => {
   return (
     <Layout header="Dashboard" title="Dashboard - SP Kulit">
       <Flex flexDirection={"column"} w="full">
-        <Grid templateColumns="repeat(3, 1fr)" gap={8} mb={8}>
+        <Grid
+          templateColumns={[
+            "repeat(1, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+          ]}
+          gap={8}
+          mb={8}
+        >
           <DashboardItem
-            href="/basis-pengetahuan"
+            href="/dashboard/basis-pengetahuan"
             label="Basis Pengetahuan"
             value={`${data.basisPengetahuan}`}
             icon={
@@ -44,7 +49,7 @@ const Dashboard: NextPage = () => {
             }
           />
           <DashboardItem
-            href="/gejala"
+            href="/dashboard/gejala"
             label="Gejala"
             value={`${data.gejala}`}
             icon={
@@ -56,7 +61,7 @@ const Dashboard: NextPage = () => {
             }
           />
           <DashboardItem
-            href="/bahan-pemutih"
+            href="/dashboard/bahan-pemutih"
             label="Bahan Pemutih"
             value={`${data.bahanPemutih}`}
             icon={

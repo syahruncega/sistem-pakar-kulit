@@ -89,17 +89,20 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                       color={"gray"}
                       onClick={mobileNav.onClose}
                     />
-                    <NextLink href={"/dashboard"} passHref>
-                      <Button
-                        as={Link}
-                        variant="ghost"
-                        colorScheme={"gray"}
-                        size="md"
-                        w="full"
-                      >
-                        Dashboard
-                      </Button>
-                    </NextLink>
+                    {session && (
+                      <NextLink href={"/dashboard/"} passHref>
+                        <Button
+                          as={Link}
+                          variant="ghost"
+                          colorScheme={"gray"}
+                          size="md"
+                          w="full"
+                        >
+                          Dashboard
+                        </Button>
+                      </NextLink>
+                    )}
+
                     <NextLink href={"/halaman-materi"} passHref>
                       <Button
                         as={Link}
@@ -111,7 +114,13 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                         Halaman Materi
                       </Button>
                     </NextLink>
-                    <NextLink href={"/login"} passHref>
+
+                    <NextLink
+                      href={
+                        session?.user?.name ? "/dashboard/profil" : "/login"
+                      }
+                      passHref
+                    >
                       <Button
                         as={Link}
                         variant="ghost"
@@ -119,7 +128,9 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                         size="md"
                         w="full"
                       >
-                        Login
+                        {session?.user?.name
+                          ? `Hi ${session.user?.name}`
+                          : "Login"}
                       </Button>
                     </NextLink>
                   </VStack>

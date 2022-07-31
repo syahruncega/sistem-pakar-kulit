@@ -62,6 +62,13 @@ const Sidebar: FC<{}> = () => {
       <Divider />
 
       <Flex mt={4} flexDirection={"column"}>
+        <NavItem
+          label="Dashboard"
+          href="/dashboard"
+          icon={<ElementBulkIcon {...navItemProps} />}
+          iconActive={<ElementBulkIcon {...navItemPropsActive} />}
+        />
+        <Divider mt={4} mb={2} />
         <Text fontWeight={"extrabold"} fontSize={12} color={"gray.400"}>
           ADMIN
         </Text>

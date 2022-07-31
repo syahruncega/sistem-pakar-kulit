@@ -22,7 +22,12 @@ const AvatarSign: FC<{}> = () => {
     <Menu>
       <MenuButton as={Button} variant="ghost">
         <Flex align={"center"}>
-          <Text fontWeight={"medium"} color={"gray.600"} mr={3}>
+          <Text
+            fontWeight={"medium"}
+            display={["none", "none", "flex"]}
+            color={"gray.600"}
+            mr={3}
+          >
             {session?.user?.name}
           </Text>
           <Avatar name={session?.user?.name!} size={"sm"} src="#" />
