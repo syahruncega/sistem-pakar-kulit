@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { signIn } from "next-auth/react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -30,6 +30,7 @@ const Login: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const {
     register,
@@ -50,6 +51,7 @@ const Login: NextPage = () => {
         email: email,
         password: password,
         redirect: false,
+        callbackUrl: `https://es-skin.vercel.app/dashboard`,
       });
 
       if (res.error === "Email") {
@@ -57,21 +59,22 @@ const Login: NextPage = () => {
           type: "manual",
           message: "Email anda tidak terdaftar",
         });
-      } else if (res.error === "Password") {
+      }
+      if (res.error === "Password") {
         setError("password", {
           type: "manual",
           message: "Kata sandi yang anda masukkan salah",
         });
         setValue("password", "");
-      } else {
-        Router.push("/dashboard");
+      }
+      if (res.error === null) {
+        router.push("/dashboard");
       }
     } catch (error) {
       setErrorMessage(error as any);
     }
 
     setLoading(false);
-    Router.push("/dashboard");
   };
 
   return (
