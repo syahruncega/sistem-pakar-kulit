@@ -8,6 +8,7 @@ import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import FormGejalaModal from "@/components/Form/FormGejalaModal";
+import ModalDetailGejala from "@/components/Modal/ModalDetailGejala";
 
 const columns: Column[] = [
   {
@@ -21,6 +22,18 @@ const columns: Column[] = [
   {
     Header: "Nilai Kepastian",
     accessor: "nilaiKepastian",
+  },
+  {
+    Header: "Keterangan",
+    accessor: (originalRow) => originalRow,
+    Cell: ({ cell: { value } }) => {
+      return (
+        <ModalDetailGejala
+          title={value.namaGejala}
+          description={value.keterangan}
+        />
+      );
+    },
   },
   {
     Header: "Aksi",

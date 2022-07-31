@@ -28,6 +28,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Textarea,
 } from "@chakra-ui/react";
 import { BahanPemutih, Gejala, User } from "@prisma/client";
 import validateEmail from "@/utils/validateEmail";
@@ -36,6 +37,7 @@ type GejalaInput = {
   kodeGejala: string;
   namaGejala: string;
   nilaiKepastian: number;
+  keterangan: string;
 };
 
 const FormGejalaModal: FC<{
@@ -199,6 +201,20 @@ const FormGejalaModal: FC<{
                 </NumberInput>
                 <FormErrorMessage>
                   {errors.nilaiKepastian?.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.keterangan && true}>
+                <FormLabel htmlFor="keterangan">Keterangan</FormLabel>
+                <Textarea
+                  id="keterangan"
+                  defaultValue={gejala?.keterangan || ""}
+                  placeholder="Keterangan"
+                  {...register("keterangan", {
+                    required: "Keterangan wajib diisi",
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.keterangan?.message}
                 </FormErrorMessage>
               </FormControl>
             </Stack>
