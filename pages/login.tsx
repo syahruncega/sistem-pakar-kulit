@@ -58,15 +58,13 @@ const Login: NextPage = () => {
           type: "manual",
           message: "Email anda tidak terdaftar",
         });
-      }
-      if (res.error === "Password") {
+      } else if (res.error === "Password") {
         setError("password", {
           type: "manual",
           message: "Kata sandi yang anda masukkan salah",
         });
         setValue("password", "");
-      }
-      if (res.error === null) {
+      } else {
         router.push("/dashboard");
       }
     } catch (error) {
