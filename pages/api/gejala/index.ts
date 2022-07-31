@@ -7,6 +7,7 @@ type GejalaInput = {
   kodeGejala: string;
   namaGejala: string;
   nilaiKepastian: string;
+  keterangan: string;
 };
 
 export default async function handler(
@@ -36,6 +37,7 @@ export default async function handler(
           kodeGejala: body.kodeGejala,
           namaGejala: body.namaGejala,
           nilaiKepastian: parseFloat(body.nilaiKepastian) || 0,
+          keterangan: body.keterangan,
         },
       });
       res.status(201).json(createGejala);

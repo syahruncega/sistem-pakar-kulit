@@ -10,8 +10,6 @@ import { FC, useState } from "react";
 import mdStyle from "@/styles/Markdown.module.css";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import axios, { AxiosResponse } from "axios";
-import showToast from "../CustomToast";
 import { printHasilDiagnosa } from "@/utils/printHasilDiagnosa";
 import { Gejala } from "@prisma/client";
 
