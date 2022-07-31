@@ -68,11 +68,10 @@ const Login: NextPage = () => {
         setValue("password", "");
       }
       if (res.error === null) {
-        router.replace("/dashboard");
+        router.push("/dashboard");
       }
     } catch (error) {
       setErrorMessage(error as any);
-      console.log(error);
     }
 
     setLoading(false);

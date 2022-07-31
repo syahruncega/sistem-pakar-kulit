@@ -145,16 +145,19 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                   }}
                   fontFamily="inter"
                 >
-                  <NextLink href={"/dashboard"} passHref>
-                    <Button
-                      as={Link}
-                      variant="ghost"
-                      colorScheme={"gray"}
-                      size="md"
-                    >
-                      Dashboard
-                    </Button>
-                  </NextLink>
+                  {session && (
+                    <NextLink href={"/dashboard/"} passHref>
+                      <Button
+                        as={Link}
+                        variant="ghost"
+                        colorScheme={"gray"}
+                        size="md"
+                      >
+                        Dashboard
+                      </Button>
+                    </NextLink>
+                  )}
+
                   <NextLink href={"/halaman-materi"} passHref>
                     <Button
                       as={Link}
@@ -165,29 +168,22 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                       Halaman Materi
                     </Button>
                   </NextLink>
-                  {session ? (
-                    <NextLink href={"/dashboard/profil"} passHref>
-                      <Button
-                        as={Link}
-                        variant="ghost"
-                        colorScheme={"gray"}
-                        size="md"
-                      >
-                        {`Hi ${session.user?.name}`}
-                      </Button>
-                    </NextLink>
-                  ) : (
-                    <NextLink href={"/login"} passHref>
-                      <Button
-                        as={Link}
-                        variant="ghost"
-                        colorScheme={"gray"}
-                        size="md"
-                      >
-                        Login
-                      </Button>
-                    </NextLink>
-                  )}
+
+                  <NextLink
+                    href={session?.user?.name ? "/dashboard/profil" : "/login"}
+                    passHref
+                  >
+                    <Button
+                      as={Link}
+                      variant="ghost"
+                      colorScheme={"gray"}
+                      size="md"
+                    >
+                      {session?.user?.name
+                        ? `Hi ${session.user?.name}`
+                        : "Login"}
+                    </Button>
+                  </NextLink>
                 </HStack>
               </HStack>
             </Flex>
