@@ -72,6 +72,7 @@ const Login: NextPage = () => {
     }
 
     setLoading(false);
+    router.push("/dashboard");
   };
 
   return (
