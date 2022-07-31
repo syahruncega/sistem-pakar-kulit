@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -30,7 +30,6 @@ const Login: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
 
   const {
     register,
@@ -65,14 +64,14 @@ const Login: NextPage = () => {
         });
         setValue("password", "");
       } else {
-        router.push("/dashboard");
+        Router.push("/dashboard");
       }
     } catch (error) {
       setErrorMessage(error as any);
     }
 
     setLoading(false);
-    router.push("/dashboard");
+    Router.push("/dashboard");
   };
 
   return (
