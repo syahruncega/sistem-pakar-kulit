@@ -68,7 +68,7 @@ const Dashboard: NextPage = () => {
             }
           />
         </Grid>
-        <Flex
+        {/* <Flex
           w="full"
           h="100px"
           bgColor={"white"}
@@ -86,7 +86,7 @@ const Dashboard: NextPage = () => {
               Mulai Diagnosa
             </Button>
           </NextLink>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Layout>
   );
