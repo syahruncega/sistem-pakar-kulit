@@ -5,6 +5,7 @@ import {
 } from "@/styles/iconsax";
 import fetcher from "@/utils/fetcher";
 import {
+  Box,
   Button,
   Center,
   Flex,
@@ -18,6 +19,7 @@ import { FC } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import useSWR from "swr";
 import showToast from "../CustomToast";
+import ModalDetailGejala from "../Modal/ModalDetailGejala";
 
 interface BasisPengetahuanAll extends BasisPengetahuan {
   bahanPemutih: {
@@ -144,16 +146,23 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
               <FormLabel fontWeight={"normal"} htmlFor={`${gejala.kodeGejala}`}>
                 {`${index + 1}. ${gejala.namaGejala}`}
               </FormLabel>
-              <Select
-                id={`${gejala.kodeGejala}`}
-                width={"200px"}
-                placeholder="Pilih jika sesuai"
-                {...register(`${gejala.kodeGejala}`)}
-              >
-                <option value="Tidak">Tidak</option>
-                <option value="Yakin">Yakin</option>
-                <option value="Sangat Yakin">Sangat Yakin</option>
-              </Select>
+
+              <Flex alignItems={"center"}>
+                <Select
+                  id={`${gejala.kodeGejala}`}
+                  width={"200px"}
+                  placeholder="Pilih jika sesuai"
+                  {...register(`${gejala.kodeGejala}`)}
+                >
+                  <option value="Tidak">Tidak</option>
+                  <option value="Yakin">Yakin</option>
+                  <option value="Sangat Yakin">Sangat Yakin</option>
+                </Select>
+                <ModalDetailGejala
+                  title={gejala.namaGejala}
+                  description={gejala.keterangan}
+                />
+              </Flex>
             </Flex>
           </FormControl>
         );
