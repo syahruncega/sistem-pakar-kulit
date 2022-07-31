@@ -205,7 +205,6 @@ const FormBahanPemutihModal: FC<{
                 <Textarea
                   id="solusi"
                   defaultValue={bahanPemutih?.solusi || ""}
-                  type={"text"}
                   placeholder="Solusi"
                   {...register("solusi", {
                     required: "Solusi wajib diisi",

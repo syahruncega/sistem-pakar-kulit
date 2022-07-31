@@ -172,7 +172,6 @@ const FormBasisPengetahuanModal: FC<{
                 <Textarea
                   id="kaidah"
                   defaultValue={basisPengetahuan?.kaidah || ""}
-                  type={"text"}
                   placeholder="Kaidah"
                   {...register("kaidah", {
                     required: "Kaidah wajib diisi",
