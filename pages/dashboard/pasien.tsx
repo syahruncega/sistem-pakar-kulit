@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
@@ -7,16 +7,24 @@ import { NextPage } from "next";
 import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import FormBasisPengetahuanModal from "@/components/Form/FormBasisPengetahuanModal";
+import FormPasienModal from "@/components/Form/FormPasienModal";
 
 const columns: Column[] = [
   {
-    Header: "Rule",
-    accessor: "rule",
+    Header: "Nama Pasien",
+    accessor: "namaPasien",
   },
   {
-    Header: "Kaidah",
-    accessor: "kaidah",
+    Header: "NIK",
+    accessor: "nik",
+  },
+  {
+    Header: "Jenis Kelamin",
+    accessor: "jenisKelamin",
+  },
+  {
+    Header: "Usia",
+    accessor: (originalRow: any) => `${originalRow.usia} Tahun`,
   },
   {
     Header: "Aksi",
@@ -24,11 +32,11 @@ const columns: Column[] = [
     Cell: ({ cell: { value } }) => {
       return (
         <Stack direction="row">
-          <FormBasisPengetahuanModal isEdit basisPengetahuan={value} />
+          <FormPasienModal isEdit pasien={value} />
           <DeleteDialog
-            title={"Hapus basis pengetahuan?"}
-            apiRoute={`/api/basis-pengetahuan/${value.id}`}
-            mutateKey={`/api/basis-pengetahuan`}
+            title={"Hapus pasien?"}
+            apiRoute={`/api/pasien/${value.id}`}
+            mutateKey={`/api/pasien`}
           />
         </Stack>
       );
@@ -36,25 +44,25 @@ const columns: Column[] = [
   },
 ];
 
-const BasisPengetahuan: NextPage<{}> = () => {
-  const { data } = useSWR("/api/basis-pengetahuan", fetcher);
+const Pasien: NextPage<{}> = () => {
+  const { data } = useSWR("/api/pasien", fetcher);
   const { data: session }: any = useSession();
   if (!data || !session) {
     return null;
   }
   return (
-    <Layout title="Basis Pengetahuan - SP Kulit" header="Basis Pengetahuan">
+    <Layout title="Pasien - SP Kulit" header="Pasien">
       <Flex w="full">
         <ChakraTable
           columns={columns}
           data={data}
           tableNumber={true}
           search={true}
-          rightButton={<FormBasisPengetahuanModal />}
+          rightButton={<FormPasienModal />}
         />
       </Flex>
     </Layout>
   );
 };
 
-export default BasisPengetahuan;
+export default Pasien;

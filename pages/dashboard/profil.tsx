@@ -1,6 +1,6 @@
 import FormUbahKataSandiModal from "@/components/Form/FormUbahKataSandiModal";
 import FormUbahProfileModal from "@/components/Form/FormUbahProfileModal";
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import LogoutDialog from "@/components/Modal/LogoutDialog";
 import { Avatar, Badge, Button, Flex, Heading, Stack } from "@chakra-ui/react";
 import { NextPage } from "next";

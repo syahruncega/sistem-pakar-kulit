@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
@@ -7,24 +7,20 @@ import { NextPage } from "next";
 import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import FormPasienModal from "@/components/Form/FormPasienModal";
+import FormGejalaModal from "@/components/Form/FormGejalaModal";
 
 const columns: Column[] = [
   {
-    Header: "Nama Pasien",
-    accessor: "namaPasien",
+    Header: "Kode",
+    accessor: "kodeGejala",
   },
   {
-    Header: "NIK",
-    accessor: "nik",
+    Header: "Nama Gejala",
+    accessor: "namaGejala",
   },
   {
-    Header: "Jenis Kelamin",
-    accessor: "jenisKelamin",
-  },
-  {
-    Header: "Usia",
-    accessor: (originalRow: any) => `${originalRow.usia} Tahun`,
+    Header: "Nilai Kepastian",
+    accessor: "nilaiKepastian",
   },
   {
     Header: "Aksi",
@@ -32,11 +28,11 @@ const columns: Column[] = [
     Cell: ({ cell: { value } }) => {
       return (
         <Stack direction="row">
-          <FormPasienModal isEdit pasien={value} />
+          <FormGejalaModal isEdit gejala={value} />
           <DeleteDialog
-            title={"Hapus pasien?"}
-            apiRoute={`/api/pasien/${value.id}`}
-            mutateKey={`/api/pasien`}
+            title={"Hapus gejala?"}
+            apiRoute={`/api/gejala/${value.id}`}
+            mutateKey={`/api/gejala`}
           />
         </Stack>
       );
@@ -44,25 +40,25 @@ const columns: Column[] = [
   },
 ];
 
-const Pasien: NextPage<{}> = () => {
-  const { data } = useSWR("/api/pasien", fetcher);
+const Gejala: NextPage<{}> = () => {
+  const { data } = useSWR("/api/gejala", fetcher);
   const { data: session }: any = useSession();
   if (!data || !session) {
     return null;
   }
   return (
-    <Layout title="Pasien - SP Kulit" header="Pasien">
+    <Layout title="Gejala - SP Kulit" header="Gejala">
       <Flex w="full">
         <ChakraTable
           columns={columns}
           data={data}
           tableNumber={true}
           search={true}
-          rightButton={<FormPasienModal />}
+          rightButton={<FormGejalaModal />}
         />
       </Flex>
     </Layout>
   );
 };
 
-export default Pasien;
+export default Gejala;

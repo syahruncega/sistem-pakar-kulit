@@ -8,10 +8,11 @@ import {
   MenuItem,
   MenuList,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import { FC } from "react";
-import LogoutDialog from "./Modal/LogoutDialog";
+import LogoutDialog from "../Modal/LogoutDialog";
 import NextLink from "next/link";
 
 const AvatarSign: FC<{}> = () => {
@@ -19,16 +20,16 @@ const AvatarSign: FC<{}> = () => {
 
   return (
     <Menu>
-      <MenuButton>
+      <MenuButton as={Button} variant="ghost">
         <Flex align={"center"}>
           <Text fontWeight={"medium"} color={"gray.600"} mr={3}>
             {session?.user?.name}
           </Text>
-          <Avatar name="Syahrun Cega" size={"sm"} src="#" />
+          <Avatar name={session?.user?.name!} size={"sm"} src="#" />
         </Flex>
       </MenuButton>
       <MenuList>
-        <NextLink href={"/profil"} passHref>
+        <NextLink href={"/dashboard/profil"} passHref>
           <MenuItem
             icon={<ProfileBulkIcon fontSize={20} color={"facebook.600"} />}
           >

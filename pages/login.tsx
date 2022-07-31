@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import Shell from "@/components/Shell";
 import { EyeBulkIcon, EyeSlashBulkIcon } from "@/styles/iconsax";
 import {
   Button,
@@ -66,7 +67,7 @@ const Login: NextPage = () => {
         setValue("password", "");
       }
       if (res.error === null) {
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error) {
       setErrorMessage(error as any);
@@ -76,96 +77,98 @@ const Login: NextPage = () => {
   };
 
   return (
-    <Center minH={"100vh"} bgColor={"gray.100"}>
-      <Stack
-        as="form"
-        w="full"
-        minW={"340px"}
-        maxW={"450px"}
-        mx={6}
-        py={6}
-        px={8}
-        spacing="24px"
-        align="center"
-        bgColor={"white"}
-        rounded={"lg"}
-        boxShadow={"lg"}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <FormControl id="email">
-          <FormLabel fontFamily={"inter"}>Email</FormLabel>
-          <InputGroup>
-            <Input
-              type="email"
-              placeholder="Email"
-              isInvalid={errors.email && true}
-              {...register("email", { required: "Email harus diisi" })}
-            />
-          </InputGroup>
-          {errors.email && (
-            <Text
-              fontSize={"sm"}
-              mt={1}
-              color={useColorModeValue("red.600", "red.400")}
-            >
-              {errors.email?.message}
-            </Text>
-          )}
-        </FormControl>
-        <FormControl id="password">
-          <Flex justifyContent="space-between" fontFamily={"inter"}>
-            <FormLabel>Kata Sandi</FormLabel>
-            {/* <ForgotPasswordModal /> */}
-          </Flex>
-          <InputGroup>
-            {/* <InputLeftElement
+    <Shell title="Login - e-Clinic">
+      <Center h={"80vh"}>
+        <Stack
+          as="form"
+          w="full"
+          minW={"340px"}
+          maxW={"450px"}
+          mx={6}
+          py={6}
+          px={8}
+          spacing="24px"
+          align="center"
+          bgColor={"white"}
+          rounded={"lg"}
+          boxShadow={"lg"}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <FormControl id="email">
+            <FormLabel fontFamily={"inter"}>Email</FormLabel>
+            <InputGroup>
+              <Input
+                type="email"
+                placeholder="Email"
+                isInvalid={errors.email && true}
+                {...register("email", { required: "Email harus diisi" })}
+              />
+            </InputGroup>
+            {errors.email && (
+              <Text
+                fontSize={"sm"}
+                mt={1}
+                color={useColorModeValue("red.600", "red.400")}
+              >
+                {errors.email?.message}
+              </Text>
+            )}
+          </FormControl>
+          <FormControl id="password">
+            <Flex justifyContent="space-between" fontFamily={"inter"}>
+              <FormLabel>Kata Sandi</FormLabel>
+              {/* <ForgotPasswordModal /> */}
+            </Flex>
+            <InputGroup>
+              {/* <InputLeftElement
                 pointerEvents="none"
                 children={<KeyBoldIcon boxSize={6} color="gray.600" />}
               /> */}
-            <Input
-              type={showPassword ? "text" : "password"}
-              placeholder="Kata Sandi"
-              isInvalid={errors.password && true}
-              {...register("password", {
-                required: "Kata sandi harus diisi",
-              })}
-            />
-            <InputRightElement>
-              <IconButton
-                size="xs"
-                aria-label="Show"
-                onClick={() => setShowPassword(!showPassword)}
-                icon={
-                  showPassword ? (
-                    <EyeSlashBulkIcon boxSize={4} />
-                  ) : (
-                    <EyeBulkIcon boxSize={4} />
-                  )
-                }
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Kata Sandi"
+                isInvalid={errors.password && true}
+                {...register("password", {
+                  required: "Kata sandi harus diisi",
+                })}
               />
-            </InputRightElement>
-          </InputGroup>
-          {errors.password && (
-            <Text
-              fontSize={"sm"}
-              mt={1}
-              color={useColorModeValue("red.600", "red.400")}
-            >
-              {errors.password?.message}
-            </Text>
-          )}
-        </FormControl>
-        <Button
-          colorScheme="facebook"
-          width="max-content"
-          type="submit"
-          isLoading={loading}
-          paddingX={10}
-        >
-          Login
-        </Button>
-      </Stack>
-    </Center>
+              <InputRightElement>
+                <IconButton
+                  size="xs"
+                  aria-label="Show"
+                  onClick={() => setShowPassword(!showPassword)}
+                  icon={
+                    showPassword ? (
+                      <EyeSlashBulkIcon boxSize={4} />
+                    ) : (
+                      <EyeBulkIcon boxSize={4} />
+                    )
+                  }
+                />
+              </InputRightElement>
+            </InputGroup>
+            {errors.password && (
+              <Text
+                fontSize={"sm"}
+                mt={1}
+                color={useColorModeValue("red.600", "red.400")}
+              >
+                {errors.password?.message}
+              </Text>
+            )}
+          </FormControl>
+          <Button
+            colorScheme="facebook"
+            width="max-content"
+            type="submit"
+            isLoading={loading}
+            paddingX={10}
+          >
+            Login
+          </Button>
+        </Stack>
+      </Center>
+    </Shell>
   );
 };
 

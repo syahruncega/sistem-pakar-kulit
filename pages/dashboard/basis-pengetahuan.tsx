@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Dashboard/Layout";
 import DeleteDialog from "@/components/Modal/DeleteDialog";
 import ChakraTable from "@/components/Table/ChakraTable";
 import fetcher from "@/utils/fetcher";
@@ -7,20 +7,16 @@ import { NextPage } from "next";
 import { Column } from "react-table";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import FormGejalaModal from "@/components/Form/FormGejalaModal";
+import FormBasisPengetahuanModal from "@/components/Form/FormBasisPengetahuanModal";
 
 const columns: Column[] = [
   {
-    Header: "Kode",
-    accessor: "kodeGejala",
+    Header: "Rule",
+    accessor: "rule",
   },
   {
-    Header: "Nama Gejala",
-    accessor: "namaGejala",
-  },
-  {
-    Header: "Nilai Kepastian",
-    accessor: "nilaiKepastian",
+    Header: "Kaidah",
+    accessor: "kaidah",
   },
   {
     Header: "Aksi",
@@ -28,11 +24,11 @@ const columns: Column[] = [
     Cell: ({ cell: { value } }) => {
       return (
         <Stack direction="row">
-          <FormGejalaModal isEdit gejala={value} />
+          <FormBasisPengetahuanModal isEdit basisPengetahuan={value} />
           <DeleteDialog
-            title={"Hapus gejala?"}
-            apiRoute={`/api/gejala/${value.id}`}
-            mutateKey={`/api/gejala`}
+            title={"Hapus basis pengetahuan?"}
+            apiRoute={`/api/basis-pengetahuan/${value.id}`}
+            mutateKey={`/api/basis-pengetahuan`}
           />
         </Stack>
       );
@@ -40,25 +36,25 @@ const columns: Column[] = [
   },
 ];
 
-const Gejala: NextPage<{}> = () => {
-  const { data } = useSWR("/api/gejala", fetcher);
+const BasisPengetahuan: NextPage<{}> = () => {
+  const { data } = useSWR("/api/basis-pengetahuan", fetcher);
   const { data: session }: any = useSession();
   if (!data || !session) {
     return null;
   }
   return (
-    <Layout title="Gejala - SP Kulit" header="Gejala">
+    <Layout title="Basis Pengetahuan - SP Kulit" header="Basis Pengetahuan">
       <Flex w="full">
         <ChakraTable
           columns={columns}
           data={data}
           tableNumber={true}
           search={true}
-          rightButton={<FormGejalaModal />}
+          rightButton={<FormBasisPengetahuanModal />}
         />
       </Flex>
     </Layout>
   );
 };
 
-export default Gejala;
+export default BasisPengetahuan;

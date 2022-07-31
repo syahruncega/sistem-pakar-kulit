@@ -1,4 +1,8 @@
-import { ArrowLeftBoldIcon, TickSquareBoldIcon } from "@/styles/iconsax";
+import {
+  ArrowLeftBoldIcon,
+  PrinterBoldIcon,
+  TickSquareBoldIcon,
+} from "@/styles/iconsax";
 import { Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import { useSistemPakar } from "contexts/SistemPakarContext";
 import { useRouter } from "next/router";
@@ -8,37 +12,13 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios, { AxiosResponse } from "axios";
 import showToast from "../CustomToast";
+import { printHasilDiagnosa } from "@/utils/printHasilDiagnosa";
+import { Gejala } from "@prisma/client";
 
 const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
-  const { pasien, gejala, diagnosa } = useSistemPakar();
+  const { diagnosa, jawaban } = useSistemPakar();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  async function saveToRiwayatDiagnosa() {
-    setLoading(true);
-    console.log(diagnosa[0].cfValue);
-    try {
-      const res = await axios.post("/api/riwayat-diagnosa", {
-        idPasien: pasien.id,
-        idBahanPemutih: diagnosa[0].bahanPemutih.id,
-        gejala: gejala,
-        detail: diagnosa,
-        nilaiCF: diagnosa[0].cfValue,
-      });
-      showToast({
-        title: "Berhasil",
-        description: "Data berhasil disimpan.",
-      });
-      router.push("/");
-    } catch (error: any) {
-      showToast({
-        title: "Terjadi Kesalahan",
-        description: error.message,
-        status: "error",
-      });
-    }
-    setLoading(false);
-  }
 
   return (
     <Flex
@@ -69,7 +49,7 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           colorScheme={"green"}
           mr={4}
           onClick={() => {
-            setTabIndex(1);
+            setTabIndex(0);
           }}
           rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
           disabled={loading}
@@ -80,10 +60,36 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
           colorScheme={"facebook"}
           rightIcon={<TickSquareBoldIcon mt={"2px"} />}
           mr={4}
-          onClick={saveToRiwayatDiagnosa}
+          onClick={() => router.push("/")}
           isLoading={loading}
         >
           Selesai
+        </Button>
+        <Button
+          colorScheme={"telegram"}
+          rightIcon={<PrinterBoldIcon mt={"2px"} />}
+          mr={4}
+          onClick={async () => {
+            let gejalaPilihan: any[] = [];
+            jawaban.gejala.map((v: Gejala) => {
+              if (jawaban.pilihan[`${v.kodeGejala}`] !== undefined) {
+                gejalaPilihan.push({
+                  gejala: v.namaGejala,
+                  jawaban: jawaban.pilihan[`${v.kodeGejala}`],
+                });
+              }
+            });
+
+            console.log(gejalaPilihan);
+            await printHasilDiagnosa(
+              diagnosa[0].bahanPemutih,
+              Math.round(diagnosa[0].cfValue * 100).toString(),
+              gejalaPilihan
+            );
+          }}
+          isLoading={loading}
+        >
+          Cetak
         </Button>
       </Center>
     </Flex>

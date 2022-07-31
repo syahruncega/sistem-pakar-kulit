@@ -1,8 +1,4 @@
-import Layout from "@/components/Layout";
-import fetcher from "@/utils/fetcher";
 import { NextPage } from "next";
-import useSWR from "swr";
-import { useSession } from "next-auth/react";
 import {
   Tabs,
   TabList,
@@ -10,23 +6,17 @@ import {
   Tab,
   TabPanel,
   Flex,
-  Button,
-  FormControl,
-  RadioGroup,
-  Stack,
-  Radio,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import FormPasienModal from "@/components/Form/FormPasienModal";
 import TabPilihGejala from "@/components/Tabs/TabPilihGejala";
-import TabPilihPasien from "@/components/Tabs/TabPilihPasien";
 import TabHasilDiagnosa from "@/components/Tabs/TabHasilDiagnosa";
+import Shell from "@/components/Shell";
 
 const Diagnosa: NextPage<{}> = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <Layout title="Diagnosa - SP Kulit" header="Diagnosa">
+    <Shell title="Diagnosa - SP Kulit" header="Diagnosa">
       <Flex w="full" bgColor={"white"} rounded="lg" boxShadow="lg">
         <Tabs
           isLazy
@@ -36,14 +26,14 @@ const Diagnosa: NextPage<{}> = () => {
           overflow={"hidden"}
         >
           <TabList>
-            <Tab fontWeight={"medium"}>Pasien</Tab>
+            {/* <Tab fontWeight={"medium"}>Pasien</Tab> */}
             <Tab fontWeight={"medium"}>Gejala</Tab>
             <Tab fontWeight={"medium"}>Hasil Diagnosa</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>
+            {/* <TabPanel>
               <TabPilihPasien setTabIndex={setTabIndex} />
-            </TabPanel>
+            </TabPanel> */}
             <TabPanel>
               <TabPilihGejala setTabIndex={setTabIndex} />
             </TabPanel>
@@ -53,7 +43,7 @@ const Diagnosa: NextPage<{}> = () => {
           </TabPanels>
         </Tabs>
       </Flex>
-    </Layout>
+    </Shell>
   );
 };
 

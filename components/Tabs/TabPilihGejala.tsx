@@ -5,6 +5,7 @@ import {
 } from "@/styles/iconsax";
 import fetcher from "@/utils/fetcher";
 import {
+  Box,
   Button,
   Center,
   Flex,
@@ -17,6 +18,8 @@ import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import useSWR from "swr";
+import showToast from "../CustomToast";
+import ModalDetailGejala from "../Modal/ModalDetailGejala";
 
 interface BasisPengetahuanAll extends BasisPengetahuan {
   bahanPemutih: {
@@ -34,7 +37,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
     "/api/basis-pengetahuan",
     fetcher
   );
-  const { setGejala, setDiagnosa } = useSistemPakar();
+  const { setJawaban, setDiagnosa } = useSistemPakar();
   const {
     register,
     handleSubmit,
@@ -47,12 +50,8 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   }
 
   function getCFUser(value: string) {
-    if (value === "Mungkin") {
-      return 0.4;
-    } else if (value === "Cukup Yakin") {
-      return 0.6;
-    } else if (value === "Yakin") {
-      return 0.8;
+    if (value === "Yakin") {
+      return 0.5;
     } else if (value === "Sangat Yakin") {
       return 1;
     } else {
@@ -80,6 +79,15 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       }
     });
 
+    if (selectedRule.length === 0) {
+      showToast({
+        title: "Terjadi kesalahan",
+        description: "Harap memilih minimal satu gejala untuk mendiagnosa",
+        status: "error",
+      });
+      return;
+    }
+
     //*CERTAINTY FACTOR
     let certaintyFactor: SelectedRule[] = [];
     selectedRule.map((rule) => {
@@ -103,6 +111,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       certaintyFactor.push({ ...rule, cfValue: combined });
     });
     console.log(certaintyFactor);
+
     Object.keys(data).forEach((key) => {
       if (data[key] === "") {
         delete data[key];
@@ -114,9 +123,9 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       return b.cfValue - a.cfValue;
     });
 
-    setGejala(data);
+    setJawaban({ pilihan: data, gejala: dataGejala });
     setDiagnosa(certaintyFactor);
-    setTabIndex(2);
+    setTabIndex(1);
   };
 
   return (
@@ -137,33 +146,28 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
               <FormLabel fontWeight={"normal"} htmlFor={`${gejala.kodeGejala}`}>
                 {`${index + 1}. ${gejala.namaGejala}`}
               </FormLabel>
-              <Select
-                id={`${gejala.kodeGejala}`}
-                width={"200px"}
-                placeholder="Pilih jika sesuai"
-                {...register(`${gejala.kodeGejala}`)}
-              >
-                <option value="Tidak">Tidak</option>
-                <option value="Mungkin">Mungkin</option>
-                <option value="Cukup Yakin">Cukup Yakin</option>
-                <option value="Yakin">Yakin</option>
-                <option value="Sangat Yakin">Sangat Yakin</option>
-              </Select>
+
+              <Flex alignItems={"center"}>
+                <Select
+                  id={`${gejala.kodeGejala}`}
+                  width={"200px"}
+                  placeholder="Pilih jika sesuai"
+                  {...register(`${gejala.kodeGejala}`)}
+                >
+                  <option value="Tidak">Tidak</option>
+                  <option value="Yakin">Yakin</option>
+                  <option value="Sangat Yakin">Sangat Yakin</option>
+                </Select>
+                <ModalDetailGejala
+                  title={gejala.namaGejala}
+                  description={gejala.keterangan}
+                />
+              </Flex>
             </Flex>
           </FormControl>
         );
       })}
       <Center mt={2}>
-        <Button
-          colorScheme={"green"}
-          mr={4}
-          onClick={() => {
-            setTabIndex(0);
-          }}
-          rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
-        >
-          Kembali
-        </Button>
         <Button
           colorScheme={"orange"}
           mr={4}
