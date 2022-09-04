@@ -25,13 +25,16 @@ model User {
 }
 
 model Gejala {
-  id             String   @id @default(uuid())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  kodeGejala     String   @unique
-  namaGejala     String
-  keterangan     String   @db.Text
-  nilaiKepastian Float
+  id               String   @id @default(uuid())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  kodeGejala       String   @unique
+  namaGejala       String
+  keterangan       String?  @db.Text
+  labelCukupYakin  String   @db.Text
+  labelSangatYakin String   @db.Text
+  urlGambar        String?  @db.Text
+  nilaiKepastian   Float
 }
 
 model BahanPemutih {

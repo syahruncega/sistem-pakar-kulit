@@ -1,5 +1,7 @@
 import {
+  AspectRatio,
   Button,
+  Center,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -8,12 +10,13 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Gejala } from "@prisma/client";
 import React, { FC } from "react";
+import NextImage from "next/image";
 
 const ModalDetailGejala: FC<{
-  title: string;
-  description: string;
-}> = ({ title, description }) => {
+  gejala: Gejala;
+}> = ({ gejala }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -24,9 +27,29 @@ const ModalDetailGejala: FC<{
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent maxW={600}>
-          <ModalHeader>{title}</ModalHeader>
+          <ModalHeader>{gejala.namaGejala}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody mb={6}>{description}</ModalBody>
+          <ModalBody mb={6}>{gejala.keterangan}</ModalBody>
+          {gejala.urlGambar && (
+            <Center>
+              <AspectRatio
+                ratio={4 / 3}
+                w="200px"
+                borderRadius="md"
+                overflow={"hidden"}
+                mb={4}
+              >
+                <NextImage
+                  layout="fill"
+                  objectFit="cover"
+                  src={gejala.urlGambar}
+                  placeholder={"blur"}
+                  alt={gejala.namaGejala}
+                  blurDataURL={gejala.urlGambar}
+                />
+              </AspectRatio>
+            </Center>
+          )}
         </ModalContent>
       </Modal>
     </>

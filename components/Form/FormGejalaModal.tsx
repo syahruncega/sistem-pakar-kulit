@@ -1,13 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import { useRouter } from "next/router";
 import { FC, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
 import showToast from "../CustomToast";
 import {
-  Checkbox,
-  CheckboxGroup,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -22,7 +18,6 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
-  Select,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -30,22 +25,14 @@ import {
   NumberDecrementStepper,
   Textarea,
 } from "@chakra-ui/react";
-import { BahanPemutih, Gejala, User } from "@prisma/client";
-import validateEmail from "@/utils/validateEmail";
-
-type GejalaInput = {
-  kodeGejala: string;
-  namaGejala: string;
-  nilaiKepastian: number;
-  keterangan: string;
-};
+import { Gejala } from "@prisma/client";
+import { GejalaInput } from "@/utils/types";
 
 const FormGejalaModal: FC<{
   gejala?: Gejala;
   isEdit?: boolean;
 }> = ({ gejala, isEdit }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { mutate } = useSWRConfig();
   const {
@@ -53,7 +40,6 @@ const FormGejalaModal: FC<{
     handleSubmit,
     setError,
     setFocus,
-    getValues,
     reset,
     formState: { errors },
   } = useForm<GejalaInput>();
@@ -216,6 +202,51 @@ const FormGejalaModal: FC<{
                 <FormErrorMessage>
                   {errors.keterangan?.message}
                 </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.labelCukupYakin && true}>
+                <FormLabel htmlFor="labelCukupYakin">
+                  Label Cukup Yakin
+                </FormLabel>
+                <Input
+                  id="labelCukupYakin"
+                  defaultValue={gejala?.labelCukupYakin || ""}
+                  type={"text"}
+                  placeholder="Label Cukup Yakin"
+                  {...register("labelCukupYakin", {
+                    required: "Label cukup yakin wajib diisi",
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.labelCukupYakin?.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.labelSangatYakin && true}>
+                <FormLabel htmlFor="labelSangatYakin">
+                  Label sangat yakin
+                </FormLabel>
+                <Input
+                  id="labelSangatYakin"
+                  defaultValue={gejala?.labelSangatYakin || ""}
+                  type={"text"}
+                  placeholder="Label sangat yakin"
+                  {...register("labelSangatYakin", {
+                    required: "Label sangat yakin wajib diisi",
+                  })}
+                />
+                <FormErrorMessage>
+                  {errors.labelSangatYakin?.message}
+                </FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={errors.urlGambar && true}>
+                <FormLabel htmlFor="urlGambar">Url gambar</FormLabel>
+                <Input
+                  id="urlGambar"
+                  defaultValue={gejala?.urlGambar || ""}
+                  type={"text"}
+                  placeholder="Url gambar"
+                  {...register("urlGambar")}
+                />
+                <FormErrorMessage>{errors.urlGambar?.message}</FormErrorMessage>
               </FormControl>
             </Stack>
           </ModalBody>

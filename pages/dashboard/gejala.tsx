@@ -27,12 +27,7 @@ const columns: Column[] = [
     Header: "Keterangan",
     accessor: (originalRow) => originalRow,
     Cell: ({ cell: { value } }) => {
-      return (
-        <ModalDetailGejala
-          title={value.namaGejala}
-          description={value.keterangan}
-        />
-      );
+      return <ModalDetailGejala gejala={value} />;
     },
   },
   {

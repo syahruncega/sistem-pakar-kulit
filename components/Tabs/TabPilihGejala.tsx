@@ -1,25 +1,39 @@
-import {
-  ArrowLeftBoldIcon,
-  TickSquareBoldIcon,
-  TrushSquareBoldIcon,
-} from "@/styles/iconsax";
+import { TickSquareBoldIcon, TrushSquareBoldIcon } from "@/styles/iconsax";
 import fetcher from "@/utils/fetcher";
 import {
+  AspectRatio,
   Box,
   Button,
   Center,
   Flex,
   FormControl,
-  FormLabel,
-  Select,
+  Grid,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { BahanPemutih, BasisPengetahuan, Gejala } from "@prisma/client";
 import { useSistemPakar } from "contexts/SistemPakarContext";
 import { FC } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 import useSWR from "swr";
 import showToast from "../CustomToast";
-import ModalDetailGejala from "../Modal/ModalDetailGejala";
+import NextImage from "next/image";
 
 interface BasisPengetahuanAll extends BasisPengetahuan {
   bahanPemutih: {
@@ -39,9 +53,11 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   );
   const { setJawaban, setDiagnosa } = useSistemPakar();
   const {
-    register,
     handleSubmit,
     reset,
+    control,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<any>();
 
@@ -50,7 +66,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
   }
 
   function getCFUser(value: string) {
-    if (value === "Yakin") {
+    if (value === "Cukup Yakin") {
       return 0.5;
     } else if (value === "Sangat Yakin") {
       return 1;
@@ -67,7 +83,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
     //*FORWARD CHAINING
     let selectedRule: BasisPengetahuanAll[] = [];
     dataGejala.map((gejala) => {
-      if (data[`${gejala.kodeGejala}`] !== "") {
+      if (data[`${gejala.kodeGejala}`] !== "" && gejala.kodeGejala in data) {
         dataRule.map((rule) => {
           if (
             rule.kaidah.includes(gejala.kodeGejala) &&
@@ -79,7 +95,7 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       }
     });
 
-    if (selectedRule.length === 0) {
+    if (Object.keys(data).length === 0 || selectedRule.length === 0) {
       showToast({
         title: "Terjadi kesalahan",
         description: "Harap memilih minimal satu gejala untuk mendiagnosa",
@@ -135,38 +151,19 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       mx={4}
       onSubmit={handleSubmit(onSubmit)}
     >
-      {dataGejala.map((gejala, index) => {
-        return (
-          <FormControl key={gejala.id} my={2}>
-            <Flex
-              flexDirection={["column", "column", "row"]}
-              justifyContent={"space-between"}
-              align={["flex-start", "flex-start", "center"]}
-            >
-              <FormLabel fontWeight={"normal"} htmlFor={`${gejala.kodeGejala}`}>
-                {`${index + 1}. ${gejala.namaGejala}`}
-              </FormLabel>
-
-              <Flex alignItems={"center"}>
-                <Select
-                  id={`${gejala.kodeGejala}`}
-                  width={"200px"}
-                  placeholder="Pilih jika sesuai"
-                  {...register(`${gejala.kodeGejala}`)}
-                >
-                  <option value="Tidak">Tidak</option>
-                  <option value="Yakin">Yakin</option>
-                  <option value="Sangat Yakin">Sangat Yakin</option>
-                </Select>
-                <ModalDetailGejala
-                  title={gejala.namaGejala}
-                  description={gejala.keterangan}
-                />
-              </Flex>
-            </Flex>
-          </FormControl>
-        );
-      })}
+      <Grid templateColumns="repeat(4, 1fr)" gap={6} mb={8}>
+        {dataGejala.map((gejala, index) => {
+          return (
+            <ModalGejala
+              key={gejala.id}
+              gejala={gejala}
+              control={control}
+              getValues={getValues}
+              setValue={setValue}
+            />
+          );
+        })}
+      </Grid>
       <Center mt={2}>
         <Button
           colorScheme={"orange"}
@@ -191,3 +188,131 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
 };
 
 export default TabPilihGejala;
+
+const ModalGejala: FC<{
+  gejala: Gejala;
+  control: any;
+  getValues: UseFormGetValues<any>;
+  setValue: UseFormSetValue<any>;
+}> = ({ gejala, control, getValues, setValue }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const gejalaValue = getValues(gejala.kodeGejala);
+  return (
+    <>
+      <Flex
+        direction={"row"}
+        bg={
+          gejalaValue == "" || gejalaValue == undefined
+            ? "white"
+            : gejalaValue == "Cukup Yakin"
+            ? "teal.300"
+            : "blue.300"
+        }
+        shadow={"md"}
+        borderRadius="md"
+        p={3}
+        w={"100%"}
+        onClick={onOpen}
+        justifyContent="center"
+        transition={"transform 0.3s"}
+        _hover={{
+          transform: "scale(1.1)",
+          transition: "transform 0.3s",
+          cursor: "pointer",
+        }}
+      >
+        <Text textAlign={"center"} my="auto">
+          {gejala.namaGejala}
+        </Text>
+      </Flex>
+
+      <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
+        <ModalOverlay />
+        <ModalContent maxWidth={"600px"}>
+          <ModalHeader>{gejala.namaGejala}</ModalHeader>
+          <ModalCloseButton
+            onClick={() => {
+              setValue(gejala.kodeGejala, "");
+              onClose();
+            }}
+          />
+          <ModalBody>
+            {gejala.urlGambar && (
+              <Center>
+                <AspectRatio
+                  ratio={4 / 3}
+                  w="200px"
+                  borderRadius="md"
+                  overflow={"hidden"}
+                  mb={4}
+                >
+                  <NextImage
+                    layout="fill"
+                    objectFit="cover"
+                    src={gejala.urlGambar}
+                    placeholder={"blur"}
+                    alt={gejala.namaGejala}
+                    blurDataURL={gejala.urlGambar}
+                  />
+                </AspectRatio>
+              </Center>
+            )}
+
+            <Text textAlign={"center"} mb={6}>
+              {gejala.keterangan || ""}
+            </Text>
+            <Text
+              textAlign={"center"}
+              mb={6}
+            >{`Apakah anda merasakan gejala ini?`}</Text>
+            <FormControl>
+              <Controller
+                control={control}
+                name={gejala.kodeGejala}
+                defaultValue={""}
+                render={({ field: { onChange, value } }) => (
+                  <RadioGroup onChange={onChange} value={value}>
+                    <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+                      <Stack
+                        direction="column"
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                        border={"2px #9ca3af dashed"}
+                        rounded={"xl"}
+                        p={2}
+                      >
+                        <Text textAlign={"center"}>
+                          {gejala.labelCukupYakin}
+                        </Text>
+                        <Radio value="Cukup Yakin">Cukup Yakin</Radio>
+                      </Stack>
+                      <Stack
+                        direction="column"
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                        border={"2px #9ca3af dashed"}
+                        rounded={"xl"}
+                        p={2}
+                      >
+                        <Text textAlign={"center"}>
+                          {gejala.labelSangatYakin}
+                        </Text>
+                        <Radio value="Sangat Yakin">Sangat Yakin</Radio>
+                      </Stack>
+                    </Grid>
+                  </RadioGroup>
+                )}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Simpan
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};

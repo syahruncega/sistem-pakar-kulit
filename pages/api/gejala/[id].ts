@@ -2,12 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 
 import { prisma } from "@/libs/prisma";
-
-type GejalaInput = {
-  kodeGejala: string;
-  namaGejala: string;
-  nilaiKepastian: string;
-};
+import { GejalaInput } from "@/utils/types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,6 +37,10 @@ export default async function handler(
           kodeGejala: body.kodeGejala,
           namaGejala: body.namaGejala,
           nilaiKepastian: parseFloat(body.nilaiKepastian) || 0,
+          keterangan: body.keterangan,
+          labelCukupYakin: body.labelCukupYakin,
+          labelSangatYakin: body.labelSangatYakin,
+          urlGambar: body.urlGambar,
         },
       });
       res.status(200).send(updateGejala);
