@@ -104,7 +104,7 @@ const basisPengetahuan = [
   },
   {
     rule: "R11",
-    kaidah: "IF G027AND G028 AND G029 AND G030 THEN P011",
+    kaidah: "IF G027 AND G028 AND G029 AND G030 THEN P011",
     kodeBahanPemutih: "P011",
   },
   {

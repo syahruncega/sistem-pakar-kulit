@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
@@ -30,10 +30,10 @@ model Gejala {
   updatedAt        DateTime @updatedAt
   kodeGejala       String   @unique
   namaGejala       String
-  keterangan       String?  @db.Text
-  labelCukupYakin  String   @db.Text
-  labelSangatYakin String   @db.Text
-  urlGambar        String?  @db.Text
+  keterangan       String?
+  labelCukupYakin  String
+  labelSangatYakin String
+  urlGambar        String?
   nilaiKepastian   Float
 }
 
@@ -44,7 +44,7 @@ model BahanPemutih {
   kodeBahanPemutih   String            @unique
   jenisBahanPemutih  String            @unique
   presentaseKadarMax String
-  solusi             String            @db.Text
+  solusi             String
   basisPengetahuan   BasisPengetahuan?
 }
 
@@ -53,7 +53,7 @@ model BasisPengetahuan {
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   rule             String        @unique
-  kaidah           String        @db.Text
+  kaidah           String
   bahanPemutih     BahanPemutih? @relation(fields: [kodeBahanPemutih], references: [kodeBahanPemutih])
   kodeBahanPemutih String?       @unique
 }
