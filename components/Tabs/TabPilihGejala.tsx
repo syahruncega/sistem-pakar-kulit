@@ -151,7 +151,11 @@ const TabPilihGejala: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       mx={4}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Grid templateColumns="repeat(4, 1fr)" gap={6} mb={8}>
+      <Grid
+        templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]}
+        gap={6}
+        mb={8}
+      >
         {dataGejala.map((gejala, index) => {
           return (
             <ModalGejala

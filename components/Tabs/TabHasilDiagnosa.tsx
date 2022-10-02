@@ -42,53 +42,57 @@ const TabHasilDiagnosa: FC<{ setTabIndex: Function }> = ({ setTabIndex }) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]} className={mdStyle.markdown}>
         {diagnosa[0].bahanPemutih.solusi}
       </ReactMarkdown>
-      <Center mt={2}>
-        <Button
-          colorScheme={"green"}
-          mr={4}
-          onClick={() => {
-            setTabIndex(0);
-          }}
-          rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
-          disabled={loading}
-        >
-          Kembali
-        </Button>
-        <Button
-          colorScheme={"facebook"}
-          rightIcon={<TickSquareBoldIcon mt={"2px"} />}
-          mr={4}
-          onClick={() => router.push("/")}
-          isLoading={loading}
-        >
-          Selesai
-        </Button>
-        <Button
-          colorScheme={"telegram"}
-          rightIcon={<PrinterBoldIcon mt={"2px"} />}
-          mr={4}
-          onClick={async () => {
-            let gejalaPilihan: any[] = [];
-            jawaban.gejala.map((v: Gejala) => {
-              if (jawaban.pilihan[`${v.kodeGejala}`] !== undefined) {
-                gejalaPilihan.push({
-                  gejala: v.namaGejala,
-                  jawaban: jawaban.pilihan[`${v.kodeGejala}`],
-                });
-              }
-            });
+      <Center mt={8}>
+        <Flex flexDirection={["column", "row"]}>
+          <Button
+            colorScheme={"green"}
+            mr={4}
+            mb={4}
+            onClick={() => {
+              setTabIndex(0);
+            }}
+            rightIcon={<ArrowLeftBoldIcon mt={"2px"} />}
+            disabled={loading}
+          >
+            Kembali
+          </Button>
+          <Button
+            colorScheme={"facebook"}
+            rightIcon={<TickSquareBoldIcon mt={"2px"} />}
+            mr={4}
+            mb={4}
+            onClick={() => router.push("/")}
+            isLoading={loading}
+          >
+            Selesai
+          </Button>
+          <Button
+            colorScheme={"telegram"}
+            rightIcon={<PrinterBoldIcon mt={"2px"} />}
+            mr={4}
+            onClick={async () => {
+              let gejalaPilihan: any[] = [];
+              jawaban.gejala.map((v: Gejala) => {
+                if (jawaban.pilihan[`${v.kodeGejala}`] !== undefined) {
+                  gejalaPilihan.push({
+                    gejala: v.namaGejala,
+                    jawaban: jawaban.pilihan[`${v.kodeGejala}`],
+                  });
+                }
+              });
 
-            console.log(gejalaPilihan);
-            await printHasilDiagnosa(
-              diagnosa[0].bahanPemutih,
-              Math.round(diagnosa[0].cfValue * 100).toString(),
-              gejalaPilihan
-            );
-          }}
-          isLoading={loading}
-        >
-          Cetak
-        </Button>
+              console.log(gejalaPilihan);
+              await printHasilDiagnosa(
+                diagnosa[0].bahanPemutih,
+                Math.round(diagnosa[0].cfValue * 100).toString(),
+                gejalaPilihan
+              );
+            }}
+            isLoading={loading}
+          >
+            Cetak
+          </Button>
+        </Flex>
       </Center>
     </Flex>
   );
