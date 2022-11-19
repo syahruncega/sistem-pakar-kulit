@@ -103,7 +103,7 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                       </NextLink>
                     )}
 
-                    <NextLink href={"/halaman-materi"} passHref>
+                    {/* <NextLink href={"/halaman-materi"} passHref>
                       <Button
                         as={Link}
                         variant="ghost"
@@ -113,7 +113,7 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                       >
                         Halaman Materi
                       </Button>
-                    </NextLink>
+                    </NextLink> */}
 
                     <NextLink
                       href={
@@ -169,7 +169,7 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                     </NextLink>
                   )}
 
-                  <NextLink href={"/halaman-materi"} passHref>
+                  {/* <NextLink href={"/halaman-materi"} passHref>
                     <Button
                       as={Link}
                       variant="ghost"
@@ -178,7 +178,7 @@ const Shell: FC<{ title?: string; header?: string }> = ({
                     >
                       Halaman Materi
                     </Button>
-                  </NextLink>
+                  </NextLink> */}
 
                   <NextLink
                     href={session?.user?.name ? "/dashboard/profil" : "/login"}
